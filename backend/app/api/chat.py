@@ -9,6 +9,7 @@ from app.models.agent import ChatMessage
 from app.schemas.chat import ChatRequest, ChatResponse
 from app.services.auth_service import get_current_user
 from app.services.data_processor import data_processor
+from app.services.llm_service import llm_service
 from app.config import settings
 
 router = APIRouter(prefix="/chat", tags=["AI Business Operations Copilot"])
@@ -22,9 +23,15 @@ def ask_business_copilot(
     """
     Intelligent AI Chat Interface for business owners and managers.
     Answers specific questions regarding deposits, credit risk, customer churn,
-    transaction drop-offs, and strategic decisions using verified data.
+    transaction drop-offs, and strategic decisions using live LLM reasoning (Gemini/OpenAI)
+    strictly grounded in verified database metrics.
     """
     kpis = data_processor.calculate_comprehensive_kpis(db)
+    fin = kpis["financial_kpis"]
+    cust = kpis["customer_kpis"]
+    lend = kpis["lending_kpis"]
+    ops = kpis["operations_kpis"]
+    risk = kpis["risk_kpis"]
     msg = chat_in.message.lower()
     session_id = chat_in.session_id or f"chat_{uuid.uuid4().hex[:8]}"
 
@@ -41,75 +48,39 @@ def ask_business_copilot(
     elif any(w in msg for w in ["kpi", "numbers", "trend", "data", "how many"]):
         agent_name = "Data Analyst Agent"
 
-    fin = kpis["financial_kpis"]
-    cust = kpis["customer_kpis"]
-    lend = kpis["lending_kpis"]
-    ops = kpis["operations_kpis"]
-    risk = kpis["risk_kpis"]
+    # Invoke LLM Service with full context and role
+    llm_result = llm_service.generate_chat_response(
+        user_message=chat_in.message,
+        agent_role=agent_name,
+        kpis=kpis
+    )
+    reply = llm_result["reply"]
 
-    # Context-grounded response generation
+    # Dynamic follow-up recommendations based on topic
     if "deposit" in msg or "balance" in msg:
-        reply = (
-            f"Based on our audited accounts database (May–Oct 2026), our total deposit balance stands at "
-            f"₹{fin['total_deposit_balance']:,.2f} across 1,600 accounts. The average balance per account is "
-            f"₹{fin['avg_account_balance']:,.2f}. Note that {fin['dormancy_ratio']}% of accounts ({fin['account_status_counts'].get('Dormant', 0)} accounts) "
-            f"are currently dormant, which represents an immediate mobilization opportunity."
-        )
         followups = [
-            "How can we reactivate the dormant accounts?",
+            "How can we reactivate the 404 dormant accounts?",
             "What is the deposit balance by account type?",
             "Which customer segment holds the highest deposits?"
         ]
     elif "loan" in msg or "delinquency" in msg or "npa" in msg or "default" in msg:
-        reply = (
-            f"Our lending portfolio records {lend['total_applications']} loan applications totaling ₹{lend['total_requested_amount']:,.2f}. "
-            f"The current approval rate is {lend['approval_rate']}% with ₹{lend['disbursed_volume']:,.2f} disbursed. "
-            f"However, our repayment delinquency rate has reached {risk['delinquency_rate']}% with an average DPD of {risk['avg_days_past_due']} days. "
-            f"The Finance and Verification Agents recommend setting a strict 620 CIBIL threshold on auto and personal loans."
-        )
         followups = [
             "What is the approval rate by loan category?",
             "What is our collection recovery rate?",
             "What is the impact of enforcing a 620 credit score cutoff?"
         ]
     elif "transaction" in msg or "failure" in msg or "channel" in msg:
-        reply = (
-            f"Across 3,500 recorded transactions totaling ₹{fin['total_transaction_turnover']:,.2f}, our overall success rate is "
-            f"{ops['success_rate']}%. We observed {ops['failed_transactions']} technical failures ({ops['failure_rate']}%) and "
-            f"{ops['reversed_transactions']} reversals. UPI is the highest volume channel ({ops['channel_distribution'].get('UPI', 0)} transactions), "
-            f"followed by POS ({ops['channel_distribution'].get('POS', 0)}). The Operations Agent recommends deploying dual-switch redundancy."
-        )
         followups = [
             "Which payment channel has the highest drop-off rate?",
             "How many transactions were flagged for fraud review?",
             "What is the monthly transaction trend over the 6-month period?"
         ]
-    elif "customer" in msg or "segment" in msg:
-        reply = (
-            f"Our active customer registry comprises {cust['total_customers']} clients distributed as follows: "
-            f"Retail ({cust['segment_breakdown'].get('Retail', 0)}), Priority ({cust['segment_breakdown'].get('Priority', 0)}), "
-            f"SME ({cust['segment_breakdown'].get('SME', 0)}), and Corporate ({cust['segment_breakdown'].get('Corporate', 0)}). "
-            f"KYC status shows {cust['kyc_status_breakdown'].get('Verified', 0)} verified, {cust['kyc_status_breakdown'].get('Pending', 0)} pending, "
-            f"and {cust['kyc_status_breakdown'].get('Review Required', 0)} under review."
-        )
-        followups = [
-            "What are the top cities by customer volume?",
-            "What is the risk profile distribution of our customer base?",
-            "How should we allocate our marketing budget across segments?"
-        ]
     else:
-        reply = (
-            f"As the {agent_name}, I have reviewed our consolidated banking intelligence across May 1 to October 31, 2026. "
-            f"Our top highlights: ₹{fin['total_deposit_balance']:,.2f} total deposits, ₹{fin['total_transaction_turnover']:,.2f} turnover, "
-            f"{lend['approval_rate']}% loan approval rate, and {risk['delinquency_rate']}% delinquency rate. "
-            f"The 6-agent CrewAI system has generated a strategic improvement plan to increase deposit mobilization and reduce credit default risks."
-        )
         followups = [
-            "Summarize the Data Analyst Agent's main findings",
-            "Show me the recommended strategic action plan",
-            "What are the pending human approval items?"
+            "Summarize executive action plan for the next 6 months",
+            "What are the top 3 credit risks facing the bank?",
+            "How is the Verification Agent auditing our KPI claims?"
         ]
-
     # Save chat messages to DB
     user_msg = ChatMessage(
         session_id=session_id,

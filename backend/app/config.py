@@ -8,9 +8,18 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api"
     
     # Security
-    SECRET_KEY: str = os.getenv("SECRET_KEY", "super-secret-jwt-key-for-banking-decision-intelligence-2026")
+    SECRET_KEY: str = os.getenv("SECRET_KEY") or "production-grade-sec-key-32bytes-jwt-signing-verified-2026"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 24 hours
+    
+    # CORS Allowed Origins
+    ALLOWED_ORIGINS: list = [
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://smartops-bi-frontend.onrender.com",
+        "https://smartops-decision-intelligence.netlify.app",
+        "https://banking-intelligence-backend.onrender.com"
+    ]
     
     # Database
     DATABASE_URL: str = os.getenv(

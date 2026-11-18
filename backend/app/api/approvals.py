@@ -48,7 +48,14 @@ def review_approval_request(
     """
     Human-in-the-loop review: Authorized Business Manager approves or rejects
     the proposed consequential business action. Records immutable decision log.
+    Enforces RBAC: Only 'business_manager' or 'admin' roles are permitted.
     """
+    if current_user.role not in ["admin", "business_manager"]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Forbidden: Only Business Managers and Administrators have authority to sign off on consequential business actions."
+        )
+
     item = db.query(ApprovalRequest).filter(ApprovalRequest.id == approval_id).first()
     if not item:
         raise HTTPException(status_code=404, detail="Approval request not found.")
