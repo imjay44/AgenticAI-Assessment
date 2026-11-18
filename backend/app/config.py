@@ -1,19 +1,20 @@
 import os
+import secrets
 from pydantic_settings import BaseSettings
-from typing import Optional
+from typing import Optional, List
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "AI-Powered Smart Business Operations & Decision Intelligence System"
     VERSION: str = "2.0.0"
     API_V1_STR: str = "/api"
     
-    # Security
-    SECRET_KEY: str = os.getenv("SECRET_KEY") or "production-grade-sec-key-32bytes-jwt-signing-verified-2026"
+    # Security: Cryptographically generated per instance if not set in environment
+    SECRET_KEY: str = os.getenv("SECRET_KEY") or secrets.token_hex(32)
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 24 hours
     
-    # CORS Allowed Origins
-    ALLOWED_ORIGINS: list = [
+    # CORS Allowed Origins (Restricted to frontend and local development domains)
+    ALLOWED_ORIGINS: List[str] = [
         "http://localhost:5173",
         "http://localhost:3000",
         "https://smartops-bi-frontend.onrender.com",
