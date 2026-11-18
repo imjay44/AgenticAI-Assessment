@@ -1,0 +1,7 @@
+Field,Details
+Dataset,"Banking transactions, accounts, lending, repayments and risk analytics."
+Data type,Synthetic demonstration data; not real people or organizations
+Coverage,2026-05-01 through 2026-10-31
+Currency,"INR (₹), unless otherwise stated"
+Important,IDs link related sheets. Dates are within the stated six-month period.
+Privacy,"All names, contact details, records and business events are fictional."

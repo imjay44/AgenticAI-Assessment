@@ -1,0 +1,501 @@
+event_id,customer_id,event_date,event_type,risk_level,case_status,assigned_team
+RSK00001,BCU00776,2026-07-30,High Value Transfer,Critical,Closed,Operations
+RSK00002,BCU00495,2026-05-06,Repeated Failed Login,Critical,Under Review,Operations
+RSK00003,BCU00595,2026-07-26,Overdue Loan,Medium,Closed,Fraud
+RSK00004,BCU00741,2026-10-04,Repeated Failed Login,Critical,Under Review,Fraud
+RSK00005,BCU00671,2026-05-13,Unusual Transaction,Critical,Under Review,Fraud
+RSK00006,BCU01193,2026-10-01,Overdue Loan,High,Under Review,Operations
+RSK00007,BCU01094,2026-10-11,High Value Transfer,Critical,Closed,Credit Risk
+RSK00008,BCU01198,2026-05-07,Overdue Loan,Low,Under Review,Fraud
+RSK00009,BCU00954,2026-09-10,KYC Review,High,Under Review,Credit Risk
+RSK00010,BCU00525,2026-05-30,Repeated Failed Login,Critical,Under Review,Fraud
+RSK00011,BCU01061,2026-05-16,High Value Transfer,Critical,Under Review,Operations
+RSK00012,BCU00075,2026-08-30,KYC Review,High,Closed,Operations
+RSK00013,BCU00352,2026-06-11,KYC Review,Medium,Open,Fraud
+RSK00014,BCU00112,2026-05-12,High Value Transfer,Medium,Under Review,Fraud
+RSK00015,BCU00371,2026-06-06,Repeated Failed Login,Critical,Open,Fraud
+RSK00016,BCU00049,2026-10-29,Unusual Transaction,Critical,Under Review,Credit Risk
+RSK00017,BCU01161,2026-09-03,High Value Transfer,Low,Closed,Compliance
+RSK00018,BCU00018,2026-08-20,Overdue Loan,High,Under Review,Compliance
+RSK00019,BCU01200,2026-06-03,Overdue Loan,High,Open,Compliance
+RSK00020,BCU00003,2026-05-16,Overdue Loan,Medium,Closed,Operations
+RSK00021,BCU01065,2026-05-28,Overdue Loan,Low,Under Review,Compliance
+RSK00022,BCU00568,2026-05-12,High Value Transfer,High,Open,Credit Risk
+RSK00023,BCU00676,2026-07-14,Overdue Loan,Critical,Under Review,Credit Risk
+RSK00024,BCU00547,2026-10-04,KYC Review,High,Under Review,Compliance
+RSK00025,BCU00754,2026-08-25,High Value Transfer,Low,Under Review,Credit Risk
+RSK00026,BCU01167,2026-07-18,Overdue Loan,Medium,Under Review,Compliance
+RSK00027,BCU00484,2026-08-14,Overdue Loan,Medium,Under Review,Compliance
+RSK00028,BCU00371,2026-06-11,Overdue Loan,Critical,Open,Credit Risk
+RSK00029,BCU00907,2026-06-07,Overdue Loan,Critical,Open,Credit Risk
+RSK00030,BCU00393,2026-06-28,Overdue Loan,High,Under Review,Compliance
+RSK00031,BCU01085,2026-10-04,Unusual Transaction,Critical,Under Review,Compliance
+RSK00032,BCU00547,2026-10-06,Repeated Failed Login,Critical,Open,Credit Risk
+RSK00033,BCU00331,2026-07-09,High Value Transfer,Critical,Under Review,Fraud
+RSK00034,BCU01173,2026-08-14,KYC Review,High,Closed,Credit Risk
+RSK00035,BCU00762,2026-07-11,KYC Review,High,Open,Fraud
+RSK00036,BCU00247,2026-07-24,Overdue Loan,Medium,Open,Operations
+RSK00037,BCU00979,2026-08-01,KYC Review,Medium,Closed,Operations
+RSK00038,BCU00189,2026-07-08,Unusual Transaction,High,Closed,Fraud
+RSK00039,BCU00078,2026-09-01,High Value Transfer,Low,Open,Credit Risk
+RSK00040,BCU00741,2026-06-04,Overdue Loan,High,Closed,Compliance
+RSK00041,BCU00414,2026-09-05,High Value Transfer,Critical,Under Review,Operations
+RSK00042,BCU00504,2026-05-06,High Value Transfer,High,Open,Operations
+RSK00043,BCU00327,2026-09-20,Unusual Transaction,High,Under Review,Credit Risk
+RSK00044,BCU00740,2026-08-02,Unusual Transaction,Critical,Under Review,Operations
+RSK00045,BCU00247,2026-05-10,Unusual Transaction,High,Open,Credit Risk
+RSK00046,BCU00310,2026-10-17,KYC Review,Medium,Closed,Credit Risk
+RSK00047,BCU00709,2026-06-14,Overdue Loan,Medium,Open,Fraud
+RSK00048,BCU00872,2026-07-04,KYC Review,Low,Open,Credit Risk
+RSK00049,BCU00850,2026-06-08,Overdue Loan,Low,Open,Compliance
+RSK00050,BCU00774,2026-08-25,High Value Transfer,High,Open,Operations
+RSK00051,BCU00866,2026-09-08,Unusual Transaction,Low,Open,Compliance
+RSK00052,BCU00187,2026-08-06,Unusual Transaction,Low,Open,Fraud
+RSK00053,BCU00447,2026-08-11,Overdue Loan,Low,Closed,Fraud
+RSK00054,BCU00420,2026-09-11,High Value Transfer,High,Open,Operations
+RSK00055,BCU01181,2026-05-19,Repeated Failed Login,Low,Closed,Credit Risk
+RSK00056,BCU00407,2026-06-30,Repeated Failed Login,Medium,Closed,Fraud
+RSK00057,BCU00488,2026-09-17,Unusual Transaction,Low,Open,Credit Risk
+RSK00058,BCU01107,2026-06-12,High Value Transfer,Low,Under Review,Fraud
+RSK00059,BCU00226,2026-05-25,Unusual Transaction,Medium,Closed,Operations
+RSK00060,BCU00271,2026-09-05,KYC Review,Medium,Open,Fraud
+RSK00061,BCU00683,2026-06-18,Overdue Loan,Critical,Open,Operations
+RSK00062,BCU00051,2026-07-06,High Value Transfer,Critical,Closed,Credit Risk
+RSK00063,BCU00202,2026-10-18,KYC Review,High,Open,Fraud
+RSK00064,BCU00279,2026-10-24,KYC Review,Medium,Under Review,Fraud
+RSK00065,BCU00201,2026-05-03,Overdue Loan,Critical,Closed,Credit Risk
+RSK00066,BCU00813,2026-08-23,Overdue Loan,Low,Open,Operations
+RSK00067,BCU01101,2026-07-17,High Value Transfer,Medium,Open,Credit Risk
+RSK00068,BCU00746,2026-09-17,Repeated Failed Login,Low,Closed,Fraud
+RSK00069,BCU00439,2026-06-22,Unusual Transaction,Low,Under Review,Operations
+RSK00070,BCU00564,2026-06-03,KYC Review,Low,Under Review,Fraud
+RSK00071,BCU00088,2026-09-26,Unusual Transaction,Critical,Closed,Credit Risk
+RSK00072,BCU00385,2026-08-27,Unusual Transaction,High,Open,Fraud
+RSK00073,BCU00084,2026-08-02,Repeated Failed Login,Low,Open,Fraud
+RSK00074,BCU01146,2026-10-23,Overdue Loan,Medium,Closed,Fraud
+RSK00075,BCU01181,2026-10-12,High Value Transfer,Medium,Closed,Compliance
+RSK00076,BCU00677,2026-06-17,High Value Transfer,Low,Closed,Credit Risk
+RSK00077,BCU00515,2026-10-17,Repeated Failed Login,Low,Open,Credit Risk
+RSK00078,BCU01104,2026-08-13,KYC Review,Low,Under Review,Operations
+RSK00079,BCU00283,2026-07-03,High Value Transfer,Medium,Closed,Fraud
+RSK00080,BCU00979,2026-08-22,Overdue Loan,Medium,Closed,Fraud
+RSK00081,BCU00269,2026-05-10,Repeated Failed Login,Critical,Closed,Operations
+RSK00082,BCU00054,2026-07-29,Repeated Failed Login,Low,Closed,Fraud
+RSK00083,BCU00270,2026-09-18,Unusual Transaction,High,Under Review,Compliance
+RSK00084,BCU00405,2026-10-20,Overdue Loan,Critical,Under Review,Compliance
+RSK00085,BCU00625,2026-08-28,KYC Review,Medium,Open,Compliance
+RSK00086,BCU00865,2026-07-31,Repeated Failed Login,Low,Closed,Operations
+RSK00087,BCU00081,2026-08-17,Unusual Transaction,High,Open,Fraud
+RSK00088,BCU01114,2026-09-11,Overdue Loan,High,Closed,Fraud
+RSK00089,BCU00347,2026-09-18,Unusual Transaction,Critical,Under Review,Compliance
+RSK00090,BCU00956,2026-05-09,High Value Transfer,Low,Open,Credit Risk
+RSK00091,BCU00400,2026-08-17,High Value Transfer,High,Under Review,Operations
+RSK00092,BCU00669,2026-06-13,KYC Review,High,Under Review,Compliance
+RSK00093,BCU00842,2026-07-31,High Value Transfer,Medium,Closed,Operations
+RSK00094,BCU01064,2026-08-11,High Value Transfer,High,Under Review,Operations
+RSK00095,BCU00617,2026-05-10,High Value Transfer,High,Closed,Fraud
+RSK00096,BCU00234,2026-06-29,Repeated Failed Login,Low,Under Review,Credit Risk
+RSK00097,BCU00891,2026-06-26,High Value Transfer,Critical,Open,Fraud
+RSK00098,BCU00021,2026-10-07,Unusual Transaction,Critical,Open,Credit Risk
+RSK00099,BCU00645,2026-10-08,Unusual Transaction,High,Open,Compliance
+RSK00100,BCU00382,2026-06-25,Repeated Failed Login,High,Closed,Compliance
+RSK00101,BCU00612,2026-08-16,Repeated Failed Login,Medium,Under Review,Operations
+RSK00102,BCU01183,2026-10-09,Repeated Failed Login,Low,Open,Compliance
+RSK00103,BCU00743,2026-10-28,High Value Transfer,Medium,Closed,Fraud
+RSK00104,BCU01161,2026-08-23,Overdue Loan,High,Under Review,Fraud
+RSK00105,BCU00698,2026-09-11,Overdue Loan,Medium,Open,Fraud
+RSK00106,BCU00007,2026-10-25,Unusual Transaction,Medium,Under Review,Fraud
+RSK00107,BCU00869,2026-08-07,Overdue Loan,Critical,Open,Compliance
+RSK00108,BCU00480,2026-10-09,High Value Transfer,Medium,Open,Fraud
+RSK00109,BCU01162,2026-06-04,Overdue Loan,Low,Open,Operations
+RSK00110,BCU00058,2026-05-21,KYC Review,Critical,Closed,Fraud
+RSK00111,BCU00316,2026-06-19,Unusual Transaction,Critical,Open,Fraud
+RSK00112,BCU00099,2026-05-17,KYC Review,Low,Closed,Fraud
+RSK00113,BCU00455,2026-06-22,Repeated Failed Login,Critical,Closed,Compliance
+RSK00114,BCU00722,2026-07-11,Unusual Transaction,Low,Closed,Compliance
+RSK00115,BCU00949,2026-05-10,Unusual Transaction,Medium,Closed,Fraud
+RSK00116,BCU00874,2026-05-28,Overdue Loan,High,Closed,Fraud
+RSK00117,BCU00536,2026-10-18,Repeated Failed Login,Critical,Under Review,Operations
+RSK00118,BCU00708,2026-10-02,Overdue Loan,High,Closed,Operations
+RSK00119,BCU00625,2026-05-21,Repeated Failed Login,High,Closed,Fraud
+RSK00120,BCU01174,2026-07-05,High Value Transfer,Critical,Open,Operations
+RSK00121,BCU00251,2026-10-02,Overdue Loan,Low,Under Review,Fraud
+RSK00122,BCU00931,2026-06-27,KYC Review,Low,Open,Compliance
+RSK00123,BCU00283,2026-05-20,Overdue Loan,Critical,Closed,Credit Risk
+RSK00124,BCU00821,2026-08-04,Repeated Failed Login,High,Under Review,Compliance
+RSK00125,BCU00631,2026-09-14,Repeated Failed Login,Low,Closed,Fraud
+RSK00126,BCU00257,2026-06-08,KYC Review,Medium,Under Review,Credit Risk
+RSK00127,BCU00980,2026-08-20,KYC Review,High,Under Review,Credit Risk
+RSK00128,BCU00966,2026-08-18,Unusual Transaction,Low,Closed,Credit Risk
+RSK00129,BCU00654,2026-10-05,Repeated Failed Login,Low,Open,Compliance
+RSK00130,BCU01118,2026-07-03,Overdue Loan,Critical,Under Review,Compliance
+RSK00131,BCU00254,2026-10-28,High Value Transfer,Critical,Open,Compliance
+RSK00132,BCU00400,2026-06-09,Unusual Transaction,Critical,Closed,Operations
+RSK00133,BCU00164,2026-08-09,Unusual Transaction,Medium,Under Review,Compliance
+RSK00134,BCU00991,2026-05-16,KYC Review,Critical,Under Review,Credit Risk
+RSK00135,BCU00882,2026-08-22,Overdue Loan,High,Under Review,Credit Risk
+RSK00136,BCU00430,2026-07-01,KYC Review,High,Closed,Operations
+RSK00137,BCU00905,2026-07-10,Overdue Loan,Low,Open,Fraud
+RSK00138,BCU00610,2026-09-25,Unusual Transaction,Critical,Open,Fraud
+RSK00139,BCU00462,2026-10-29,Unusual Transaction,Medium,Open,Credit Risk
+RSK00140,BCU00066,2026-09-26,KYC Review,Critical,Under Review,Fraud
+RSK00141,BCU00537,2026-06-25,High Value Transfer,Medium,Closed,Fraud
+RSK00142,BCU00149,2026-10-12,High Value Transfer,Medium,Open,Fraud
+RSK00143,BCU00931,2026-08-31,KYC Review,Low,Closed,Operations
+RSK00144,BCU00478,2026-05-28,Unusual Transaction,High,Closed,Credit Risk
+RSK00145,BCU00144,2026-06-21,KYC Review,Medium,Closed,Compliance
+RSK00146,BCU00835,2026-06-21,Repeated Failed Login,Low,Open,Credit Risk
+RSK00147,BCU00982,2026-06-13,Unusual Transaction,Medium,Open,Credit Risk
+RSK00148,BCU00939,2026-05-28,High Value Transfer,High,Closed,Operations
+RSK00149,BCU01109,2026-07-04,High Value Transfer,Low,Closed,Compliance
+RSK00150,BCU00330,2026-06-12,Unusual Transaction,High,Closed,Compliance
+RSK00151,BCU01066,2026-08-14,Overdue Loan,High,Open,Credit Risk
+RSK00152,BCU00366,2026-08-25,High Value Transfer,Medium,Under Review,Fraud
+RSK00153,BCU00732,2026-06-25,High Value Transfer,Low,Closed,Fraud
+RSK00154,BCU00813,2026-06-05,High Value Transfer,Medium,Under Review,Compliance
+RSK00155,BCU00866,2026-07-28,Repeated Failed Login,Low,Under Review,Fraud
+RSK00156,BCU01111,2026-09-13,Unusual Transaction,Medium,Under Review,Credit Risk
+RSK00157,BCU00030,2026-09-11,Overdue Loan,Medium,Open,Compliance
+RSK00158,BCU00396,2026-05-16,High Value Transfer,Critical,Under Review,Operations
+RSK00159,BCU00689,2026-05-12,Overdue Loan,High,Open,Operations
+RSK00160,BCU00834,2026-10-12,Overdue Loan,Low,Under Review,Credit Risk
+RSK00161,BCU00442,2026-06-27,High Value Transfer,Medium,Closed,Fraud
+RSK00162,BCU00924,2026-07-13,High Value Transfer,Low,Open,Compliance
+RSK00163,BCU00989,2026-08-13,High Value Transfer,Medium,Closed,Fraud
+RSK00164,BCU00109,2026-07-16,KYC Review,Critical,Under Review,Compliance
+RSK00165,BCU00977,2026-08-10,Unusual Transaction,High,Closed,Fraud
+RSK00166,BCU00526,2026-09-30,Repeated Failed Login,Low,Under Review,Credit Risk
+RSK00167,BCU00651,2026-07-07,Overdue Loan,Critical,Open,Compliance
+RSK00168,BCU00986,2026-05-28,Overdue Loan,Low,Open,Fraud
+RSK00169,BCU00844,2026-10-17,KYC Review,Critical,Under Review,Fraud
+RSK00170,BCU00502,2026-06-21,Unusual Transaction,Low,Under Review,Fraud
+RSK00171,BCU01186,2026-05-15,High Value Transfer,Critical,Under Review,Credit Risk
+RSK00172,BCU00726,2026-08-27,Unusual Transaction,Critical,Open,Compliance
+RSK00173,BCU01122,2026-08-20,Repeated Failed Login,Medium,Closed,Fraud
+RSK00174,BCU00699,2026-06-03,Repeated Failed Login,Medium,Under Review,Compliance
+RSK00175,BCU00385,2026-07-14,KYC Review,Low,Open,Compliance
+RSK00176,BCU00311,2026-09-11,Repeated Failed Login,High,Under Review,Operations
+RSK00177,BCU00268,2026-07-19,KYC Review,Low,Under Review,Credit Risk
+RSK00178,BCU00334,2026-09-20,Overdue Loan,Critical,Closed,Credit Risk
+RSK00179,BCU00037,2026-09-17,KYC Review,High,Closed,Operations
+RSK00180,BCU00485,2026-06-30,KYC Review,Critical,Open,Fraud
+RSK00181,BCU00076,2026-06-07,Overdue Loan,Low,Closed,Fraud
+RSK00182,BCU00679,2026-05-09,Unusual Transaction,High,Open,Operations
+RSK00183,BCU00520,2026-07-07,Overdue Loan,Low,Under Review,Credit Risk
+RSK00184,BCU00130,2026-08-20,Overdue Loan,High,Closed,Compliance
+RSK00185,BCU00784,2026-10-21,High Value Transfer,High,Under Review,Compliance
+RSK00186,BCU00832,2026-07-30,Repeated Failed Login,Medium,Under Review,Compliance
+RSK00187,BCU00006,2026-08-17,KYC Review,Low,Open,Fraud
+RSK00188,BCU00094,2026-08-11,KYC Review,High,Open,Credit Risk
+RSK00189,BCU00027,2026-05-21,Repeated Failed Login,Critical,Under Review,Fraud
+RSK00190,BCU00248,2026-06-11,KYC Review,Critical,Closed,Compliance
+RSK00191,BCU01195,2026-06-17,Repeated Failed Login,Critical,Under Review,Compliance
+RSK00192,BCU00814,2026-10-20,Repeated Failed Login,Medium,Closed,Credit Risk
+RSK00193,BCU01009,2026-08-24,Overdue Loan,Critical,Closed,Fraud
+RSK00194,BCU00716,2026-10-08,Unusual Transaction,Medium,Closed,Credit Risk
+RSK00195,BCU01071,2026-08-24,Unusual Transaction,Low,Under Review,Operations
+RSK00196,BCU00371,2026-09-21,Overdue Loan,Low,Closed,Compliance
+RSK00197,BCU00317,2026-08-05,Unusual Transaction,Medium,Open,Operations
+RSK00198,BCU00065,2026-10-21,Overdue Loan,Critical,Closed,Credit Risk
+RSK00199,BCU00597,2026-06-28,Unusual Transaction,Medium,Closed,Credit Risk
+RSK00200,BCU00477,2026-07-14,Overdue Loan,Medium,Closed,Compliance
+RSK00201,BCU01024,2026-08-04,Repeated Failed Login,High,Under Review,Compliance
+RSK00202,BCU00890,2026-05-12,Unusual Transaction,High,Open,Fraud
+RSK00203,BCU00296,2026-07-12,Repeated Failed Login,Medium,Closed,Compliance
+RSK00204,BCU00146,2026-05-15,Repeated Failed Login,Medium,Closed,Operations
+RSK00205,BCU00299,2026-09-24,Unusual Transaction,Critical,Under Review,Operations
+RSK00206,BCU00554,2026-09-23,Unusual Transaction,Medium,Under Review,Credit Risk
+RSK00207,BCU00386,2026-09-29,KYC Review,High,Closed,Fraud
+RSK00208,BCU01001,2026-07-19,Repeated Failed Login,Low,Closed,Operations
+RSK00209,BCU00774,2026-08-27,KYC Review,Low,Under Review,Credit Risk
+RSK00210,BCU00469,2026-07-08,Overdue Loan,Low,Closed,Credit Risk
+RSK00211,BCU00658,2026-09-04,Unusual Transaction,Low,Closed,Credit Risk
+RSK00212,BCU00818,2026-07-01,Unusual Transaction,Low,Open,Credit Risk
+RSK00213,BCU00671,2026-10-09,Unusual Transaction,Medium,Under Review,Credit Risk
+RSK00214,BCU00589,2026-07-04,Overdue Loan,High,Under Review,Operations
+RSK00215,BCU00145,2026-07-03,Overdue Loan,Critical,Under Review,Operations
+RSK00216,BCU00076,2026-10-17,High Value Transfer,Medium,Closed,Compliance
+RSK00217,BCU00748,2026-07-12,Unusual Transaction,Low,Under Review,Operations
+RSK00218,BCU00203,2026-05-05,High Value Transfer,Medium,Open,Compliance
+RSK00219,BCU00646,2026-10-10,Overdue Loan,Critical,Under Review,Credit Risk
+RSK00220,BCU01106,2026-10-27,Unusual Transaction,High,Closed,Credit Risk
+RSK00221,BCU00811,2026-07-02,High Value Transfer,Low,Open,Operations
+RSK00222,BCU01131,2026-06-28,High Value Transfer,High,Open,Fraud
+RSK00223,BCU00579,2026-08-22,Overdue Loan,Critical,Under Review,Credit Risk
+RSK00224,BCU00442,2026-06-16,Unusual Transaction,Medium,Closed,Operations
+RSK00225,BCU01119,2026-06-10,Overdue Loan,High,Under Review,Compliance
+RSK00226,BCU00560,2026-09-12,Repeated Failed Login,High,Open,Fraud
+RSK00227,BCU00295,2026-05-14,High Value Transfer,High,Under Review,Compliance
+RSK00228,BCU00770,2026-07-30,Unusual Transaction,Critical,Open,Fraud
+RSK00229,BCU00528,2026-07-16,Overdue Loan,High,Open,Compliance
+RSK00230,BCU00212,2026-10-05,High Value Transfer,Medium,Closed,Operations
+RSK00231,BCU00627,2026-08-06,High Value Transfer,Critical,Under Review,Compliance
+RSK00232,BCU00492,2026-09-06,Repeated Failed Login,Low,Under Review,Credit Risk
+RSK00233,BCU00663,2026-09-30,Overdue Loan,Critical,Open,Fraud
+RSK00234,BCU00216,2026-06-29,Repeated Failed Login,Critical,Under Review,Compliance
+RSK00235,BCU00066,2026-09-26,KYC Review,Low,Closed,Operations
+RSK00236,BCU00849,2026-07-09,Repeated Failed Login,High,Open,Credit Risk
+RSK00237,BCU00494,2026-06-29,KYC Review,High,Closed,Compliance
+RSK00238,BCU00559,2026-05-31,Overdue Loan,Critical,Closed,Fraud
+RSK00239,BCU00075,2026-06-24,Unusual Transaction,Critical,Open,Credit Risk
+RSK00240,BCU01059,2026-06-16,Repeated Failed Login,Medium,Closed,Compliance
+RSK00241,BCU01044,2026-08-29,Overdue Loan,Low,Open,Operations
+RSK00242,BCU00847,2026-06-21,KYC Review,Low,Closed,Compliance
+RSK00243,BCU01178,2026-05-07,Overdue Loan,Medium,Open,Operations
+RSK00244,BCU00419,2026-05-04,High Value Transfer,Critical,Closed,Fraud
+RSK00245,BCU00117,2026-06-16,Unusual Transaction,Medium,Closed,Credit Risk
+RSK00246,BCU01025,2026-08-30,High Value Transfer,Critical,Under Review,Operations
+RSK00247,BCU00894,2026-09-01,Unusual Transaction,Critical,Open,Compliance
+RSK00248,BCU01077,2026-07-17,Unusual Transaction,Critical,Open,Credit Risk
+RSK00249,BCU00262,2026-09-26,High Value Transfer,Medium,Under Review,Compliance
+RSK00250,BCU00622,2026-08-13,Unusual Transaction,Low,Under Review,Operations
+RSK00251,BCU00791,2026-07-05,Overdue Loan,High,Open,Compliance
+RSK00252,BCU00994,2026-09-11,High Value Transfer,Critical,Under Review,Credit Risk
+RSK00253,BCU01094,2026-10-23,High Value Transfer,Critical,Closed,Fraud
+RSK00254,BCU01042,2026-08-28,KYC Review,High,Open,Credit Risk
+RSK00255,BCU00668,2026-10-08,Unusual Transaction,High,Closed,Operations
+RSK00256,BCU01020,2026-07-11,High Value Transfer,Medium,Under Review,Compliance
+RSK00257,BCU00099,2026-07-18,High Value Transfer,Medium,Closed,Credit Risk
+RSK00258,BCU01191,2026-06-04,High Value Transfer,Medium,Under Review,Fraud
+RSK00259,BCU01155,2026-10-28,Unusual Transaction,High,Under Review,Credit Risk
+RSK00260,BCU01121,2026-07-16,Unusual Transaction,Critical,Closed,Fraud
+RSK00261,BCU00209,2026-09-26,High Value Transfer,Medium,Under Review,Credit Risk
+RSK00262,BCU00173,2026-10-29,High Value Transfer,Low,Under Review,Fraud
+RSK00263,BCU00509,2026-09-28,Unusual Transaction,High,Under Review,Operations
+RSK00264,BCU00100,2026-05-04,KYC Review,Medium,Closed,Fraud
+RSK00265,BCU00156,2026-08-04,Overdue Loan,Medium,Closed,Compliance
+RSK00266,BCU00957,2026-10-21,KYC Review,High,Under Review,Credit Risk
+RSK00267,BCU00772,2026-07-10,High Value Transfer,Critical,Under Review,Credit Risk
+RSK00268,BCU01195,2026-07-23,KYC Review,Medium,Closed,Credit Risk
+RSK00269,BCU00686,2026-05-10,KYC Review,Critical,Under Review,Credit Risk
+RSK00270,BCU00543,2026-05-11,Repeated Failed Login,Medium,Closed,Credit Risk
+RSK00271,BCU00760,2026-05-07,KYC Review,High,Closed,Operations
+RSK00272,BCU00320,2026-06-27,High Value Transfer,Critical,Open,Credit Risk
+RSK00273,BCU00655,2026-06-11,Unusual Transaction,Critical,Under Review,Fraud
+RSK00274,BCU00127,2026-09-19,Overdue Loan,High,Open,Credit Risk
+RSK00275,BCU00464,2026-10-12,Repeated Failed Login,Low,Closed,Fraud
+RSK00276,BCU01033,2026-08-21,Overdue Loan,High,Open,Compliance
+RSK00277,BCU01124,2026-10-24,Repeated Failed Login,Critical,Closed,Credit Risk
+RSK00278,BCU00648,2026-05-15,Repeated Failed Login,Low,Closed,Fraud
+RSK00279,BCU01162,2026-10-02,KYC Review,Low,Closed,Compliance
+RSK00280,BCU00138,2026-10-05,Overdue Loan,High,Closed,Fraud
+RSK00281,BCU00134,2026-09-02,Unusual Transaction,Medium,Open,Operations
+RSK00282,BCU01097,2026-09-11,Repeated Failed Login,Low,Closed,Fraud
+RSK00283,BCU00656,2026-08-11,Repeated Failed Login,Low,Open,Operations
+RSK00284,BCU00518,2026-08-11,Unusual Transaction,Medium,Under Review,Operations
+RSK00285,BCU00370,2026-07-21,High Value Transfer,Medium,Under Review,Compliance
+RSK00286,BCU01034,2026-05-17,KYC Review,Medium,Closed,Operations
+RSK00287,BCU00458,2026-10-25,Repeated Failed Login,Medium,Closed,Credit Risk
+RSK00288,BCU00506,2026-10-16,Overdue Loan,Low,Under Review,Credit Risk
+RSK00289,BCU00208,2026-08-19,Repeated Failed Login,High,Closed,Credit Risk
+RSK00290,BCU00088,2026-05-04,Unusual Transaction,Critical,Open,Fraud
+RSK00291,BCU00281,2026-08-05,Unusual Transaction,Critical,Under Review,Compliance
+RSK00292,BCU00487,2026-06-08,KYC Review,Critical,Open,Fraud
+RSK00293,BCU00691,2026-10-16,KYC Review,High,Closed,Compliance
+RSK00294,BCU00191,2026-09-17,Overdue Loan,Medium,Under Review,Compliance
+RSK00295,BCU00508,2026-10-25,Repeated Failed Login,Critical,Closed,Operations
+RSK00296,BCU00406,2026-10-19,Repeated Failed Login,Medium,Open,Compliance
+RSK00297,BCU01164,2026-07-22,High Value Transfer,Critical,Under Review,Compliance
+RSK00298,BCU00335,2026-07-29,Overdue Loan,Medium,Closed,Compliance
+RSK00299,BCU00518,2026-09-12,High Value Transfer,Medium,Closed,Operations
+RSK00300,BCU00678,2026-09-09,Repeated Failed Login,Medium,Closed,Operations
+RSK00301,BCU00998,2026-10-02,Repeated Failed Login,Medium,Open,Credit Risk
+RSK00302,BCU00656,2026-05-30,Repeated Failed Login,High,Under Review,Fraud
+RSK00303,BCU00805,2026-08-04,Unusual Transaction,High,Closed,Credit Risk
+RSK00304,BCU00967,2026-09-08,KYC Review,Critical,Under Review,Fraud
+RSK00305,BCU00065,2026-10-25,KYC Review,Medium,Under Review,Compliance
+RSK00306,BCU00051,2026-08-25,Repeated Failed Login,Low,Under Review,Credit Risk
+RSK00307,BCU00425,2026-10-16,KYC Review,Medium,Under Review,Compliance
+RSK00308,BCU00540,2026-08-22,Overdue Loan,High,Closed,Fraud
+RSK00309,BCU00173,2026-06-25,KYC Review,High,Closed,Fraud
+RSK00310,BCU00072,2026-08-18,High Value Transfer,Low,Closed,Compliance
+RSK00311,BCU01194,2026-06-03,Repeated Failed Login,Low,Closed,Operations
+RSK00312,BCU00797,2026-07-14,KYC Review,Critical,Closed,Compliance
+RSK00313,BCU00646,2026-06-07,Repeated Failed Login,Low,Under Review,Compliance
+RSK00314,BCU01175,2026-10-17,Overdue Loan,Low,Closed,Credit Risk
+RSK00315,BCU00508,2026-06-03,Unusual Transaction,Medium,Closed,Fraud
+RSK00316,BCU00082,2026-10-29,KYC Review,High,Under Review,Compliance
+RSK00317,BCU00329,2026-10-25,Repeated Failed Login,Critical,Closed,Compliance
+RSK00318,BCU01077,2026-09-17,Unusual Transaction,Low,Under Review,Fraud
+RSK00319,BCU00185,2026-10-27,Overdue Loan,High,Closed,Credit Risk
+RSK00320,BCU00878,2026-07-31,Unusual Transaction,Critical,Under Review,Operations
+RSK00321,BCU00601,2026-05-12,Unusual Transaction,Critical,Closed,Credit Risk
+RSK00322,BCU00576,2026-06-08,High Value Transfer,Low,Closed,Fraud
+RSK00323,BCU00044,2026-07-15,Overdue Loan,Critical,Closed,Fraud
+RSK00324,BCU00806,2026-09-03,Overdue Loan,Medium,Closed,Compliance
+RSK00325,BCU00186,2026-05-09,Repeated Failed Login,Low,Under Review,Compliance
+RSK00326,BCU00308,2026-06-01,Repeated Failed Login,Low,Under Review,Credit Risk
+RSK00327,BCU00656,2026-10-03,High Value Transfer,High,Open,Compliance
+RSK00328,BCU00161,2026-07-17,Overdue Loan,Medium,Open,Credit Risk
+RSK00329,BCU01003,2026-08-19,KYC Review,High,Under Review,Operations
+RSK00330,BCU00655,2026-07-20,Overdue Loan,Low,Closed,Fraud
+RSK00331,BCU00627,2026-07-23,KYC Review,High,Under Review,Operations
+RSK00332,BCU00263,2026-08-14,High Value Transfer,Low,Under Review,Compliance
+RSK00333,BCU00610,2026-06-08,Repeated Failed Login,High,Closed,Operations
+RSK00334,BCU00807,2026-10-17,Overdue Loan,Low,Open,Fraud
+RSK00335,BCU00120,2026-10-04,Unusual Transaction,Low,Open,Fraud
+RSK00336,BCU00356,2026-06-24,KYC Review,Medium,Under Review,Operations
+RSK00337,BCU00937,2026-05-10,Unusual Transaction,Medium,Under Review,Compliance
+RSK00338,BCU00356,2026-10-08,Unusual Transaction,Medium,Under Review,Credit Risk
+RSK00339,BCU00195,2026-08-09,Overdue Loan,Medium,Closed,Compliance
+RSK00340,BCU00446,2026-10-08,Overdue Loan,High,Closed,Fraud
+RSK00341,BCU00978,2026-07-12,Overdue Loan,Critical,Under Review,Credit Risk
+RSK00342,BCU00972,2026-10-12,KYC Review,Critical,Under Review,Credit Risk
+RSK00343,BCU00224,2026-06-24,Repeated Failed Login,Medium,Open,Credit Risk
+RSK00344,BCU00412,2026-10-28,Repeated Failed Login,Low,Under Review,Fraud
+RSK00345,BCU00814,2026-06-08,Overdue Loan,Critical,Under Review,Credit Risk
+RSK00346,BCU00083,2026-10-26,High Value Transfer,Critical,Open,Credit Risk
+RSK00347,BCU00628,2026-06-17,Repeated Failed Login,High,Open,Compliance
+RSK00348,BCU00289,2026-08-13,Unusual Transaction,High,Closed,Credit Risk
+RSK00349,BCU00433,2026-07-08,KYC Review,High,Open,Fraud
+RSK00350,BCU00560,2026-07-19,Unusual Transaction,Low,Under Review,Fraud
+RSK00351,BCU00991,2026-05-09,Unusual Transaction,High,Under Review,Compliance
+RSK00352,BCU00328,2026-06-27,Overdue Loan,Critical,Open,Compliance
+RSK00353,BCU01170,2026-10-06,High Value Transfer,Low,Open,Fraud
+RSK00354,BCU01040,2026-10-21,Overdue Loan,Low,Under Review,Credit Risk
+RSK00355,BCU00074,2026-05-09,High Value Transfer,Medium,Under Review,Compliance
+RSK00356,BCU00672,2026-07-05,High Value Transfer,Medium,Under Review,Operations
+RSK00357,BCU00475,2026-06-13,Repeated Failed Login,High,Open,Operations
+RSK00358,BCU00457,2026-08-30,High Value Transfer,Medium,Closed,Fraud
+RSK00359,BCU00672,2026-07-26,KYC Review,High,Under Review,Fraud
+RSK00360,BCU00205,2026-06-29,KYC Review,High,Open,Credit Risk
+RSK00361,BCU00058,2026-08-30,KYC Review,Critical,Closed,Credit Risk
+RSK00362,BCU00364,2026-06-09,Repeated Failed Login,Medium,Under Review,Credit Risk
+RSK00363,BCU00584,2026-06-17,KYC Review,Medium,Closed,Fraud
+RSK00364,BCU01098,2026-05-08,Unusual Transaction,Critical,Under Review,Compliance
+RSK00365,BCU01028,2026-08-15,KYC Review,Medium,Under Review,Fraud
+RSK00366,BCU01024,2026-09-30,High Value Transfer,High,Open,Compliance
+RSK00367,BCU00189,2026-06-08,KYC Review,High,Closed,Credit Risk
+RSK00368,BCU00090,2026-05-25,Overdue Loan,Low,Closed,Operations
+RSK00369,BCU00029,2026-08-27,Repeated Failed Login,Critical,Closed,Credit Risk
+RSK00370,BCU01147,2026-08-20,High Value Transfer,Medium,Open,Fraud
+RSK00371,BCU00368,2026-10-09,KYC Review,Critical,Under Review,Operations
+RSK00372,BCU00972,2026-07-29,High Value Transfer,High,Open,Fraud
+RSK00373,BCU01020,2026-06-13,Overdue Loan,Medium,Closed,Credit Risk
+RSK00374,BCU00788,2026-09-28,KYC Review,Medium,Under Review,Credit Risk
+RSK00375,BCU00364,2026-10-07,Repeated Failed Login,Medium,Open,Compliance
+RSK00376,BCU01192,2026-10-18,Unusual Transaction,High,Under Review,Fraud
+RSK00377,BCU01123,2026-10-24,Repeated Failed Login,Medium,Closed,Fraud
+RSK00378,BCU00910,2026-09-20,KYC Review,Critical,Closed,Compliance
+RSK00379,BCU00446,2026-09-18,KYC Review,Low,Under Review,Credit Risk
+RSK00380,BCU00062,2026-08-22,High Value Transfer,High,Under Review,Compliance
+RSK00381,BCU01063,2026-10-11,KYC Review,Low,Open,Fraud
+RSK00382,BCU00637,2026-07-07,Repeated Failed Login,Medium,Under Review,Operations
+RSK00383,BCU00696,2026-05-02,KYC Review,High,Open,Operations
+RSK00384,BCU00127,2026-07-11,KYC Review,Low,Under Review,Compliance
+RSK00385,BCU01112,2026-07-12,KYC Review,Medium,Open,Credit Risk
+RSK00386,BCU00216,2026-09-10,Unusual Transaction,Low,Closed,Fraud
+RSK00387,BCU00188,2026-06-27,Repeated Failed Login,High,Open,Credit Risk
+RSK00388,BCU00816,2026-10-11,KYC Review,Critical,Closed,Compliance
+RSK00389,BCU00125,2026-09-06,Repeated Failed Login,Medium,Under Review,Compliance
+RSK00390,BCU00545,2026-10-02,KYC Review,Low,Under Review,Credit Risk
+RSK00391,BCU00859,2026-08-21,Repeated Failed Login,Medium,Under Review,Fraud
+RSK00392,BCU00864,2026-10-08,Repeated Failed Login,Medium,Under Review,Operations
+RSK00393,BCU00399,2026-09-11,High Value Transfer,Medium,Under Review,Operations
+RSK00394,BCU00165,2026-09-16,Repeated Failed Login,Critical,Under Review,Operations
+RSK00395,BCU00513,2026-06-21,High Value Transfer,Medium,Closed,Operations
+RSK00396,BCU01084,2026-05-19,High Value Transfer,Medium,Under Review,Operations
+RSK00397,BCU01011,2026-08-14,Repeated Failed Login,Medium,Under Review,Credit Risk
+RSK00398,BCU01146,2026-10-24,KYC Review,Medium,Open,Compliance
+RSK00399,BCU00321,2026-09-21,Repeated Failed Login,Low,Open,Operations
+RSK00400,BCU00178,2026-08-24,High Value Transfer,High,Open,Fraud
+RSK00401,BCU00995,2026-08-10,Overdue Loan,Medium,Open,Compliance
+RSK00402,BCU00633,2026-05-28,Repeated Failed Login,Low,Open,Fraud
+RSK00403,BCU00513,2026-09-22,Overdue Loan,Low,Open,Operations
+RSK00404,BCU00545,2026-05-12,Repeated Failed Login,Critical,Under Review,Credit Risk
+RSK00405,BCU00572,2026-09-26,Repeated Failed Login,Critical,Open,Operations
+RSK00406,BCU00360,2026-08-02,High Value Transfer,Critical,Open,Fraud
+RSK00407,BCU00148,2026-09-30,KYC Review,Low,Under Review,Fraud
+RSK00408,BCU00439,2026-07-17,KYC Review,Medium,Closed,Credit Risk
+RSK00409,BCU01115,2026-10-09,Repeated Failed Login,High,Open,Fraud
+RSK00410,BCU00279,2026-06-30,Unusual Transaction,Medium,Under Review,Compliance
+RSK00411,BCU00464,2026-07-23,KYC Review,High,Closed,Operations
+RSK00412,BCU00101,2026-10-17,Unusual Transaction,Low,Under Review,Credit Risk
+RSK00413,BCU00438,2026-05-25,KYC Review,Medium,Open,Compliance
+RSK00414,BCU00951,2026-06-14,Repeated Failed Login,Critical,Under Review,Fraud
+RSK00415,BCU00640,2026-08-09,KYC Review,Medium,Closed,Compliance
+RSK00416,BCU00518,2026-08-14,Repeated Failed Login,Critical,Open,Fraud
+RSK00417,BCU00500,2026-06-01,High Value Transfer,Low,Under Review,Credit Risk
+RSK00418,BCU00608,2026-07-05,Unusual Transaction,Low,Open,Compliance
+RSK00419,BCU00391,2026-05-11,Unusual Transaction,Low,Closed,Credit Risk
+RSK00420,BCU00590,2026-06-21,Unusual Transaction,Low,Open,Credit Risk
+RSK00421,BCU00542,2026-10-24,Unusual Transaction,Medium,Open,Fraud
+RSK00422,BCU00467,2026-08-04,Repeated Failed Login,Medium,Under Review,Operations
+RSK00423,BCU00108,2026-09-29,Repeated Failed Login,Low,Closed,Fraud
+RSK00424,BCU00980,2026-08-26,Unusual Transaction,High,Under Review,Compliance
+RSK00425,BCU00224,2026-05-30,Unusual Transaction,Low,Closed,Compliance
+RSK00426,BCU00094,2026-10-14,High Value Transfer,High,Closed,Credit Risk
+RSK00427,BCU00491,2026-07-10,Unusual Transaction,Critical,Closed,Fraud
+RSK00428,BCU00935,2026-05-09,High Value Transfer,Low,Under Review,Fraud
+RSK00429,BCU00163,2026-07-17,KYC Review,High,Closed,Fraud
+RSK00430,BCU00549,2026-10-01,Unusual Transaction,Low,Open,Credit Risk
+RSK00431,BCU00764,2026-06-17,Repeated Failed Login,High,Open,Compliance
+RSK00432,BCU00733,2026-08-08,Repeated Failed Login,Medium,Open,Fraud
+RSK00433,BCU00006,2026-09-06,Overdue Loan,Low,Under Review,Compliance
+RSK00434,BCU00309,2026-09-28,KYC Review,Low,Closed,Credit Risk
+RSK00435,BCU00745,2026-10-21,High Value Transfer,Critical,Open,Fraud
+RSK00436,BCU01029,2026-08-06,Overdue Loan,High,Open,Operations
+RSK00437,BCU00796,2026-07-20,Unusual Transaction,Low,Open,Fraud
+RSK00438,BCU00505,2026-05-30,Overdue Loan,High,Under Review,Compliance
+RSK00439,BCU00431,2026-05-19,High Value Transfer,Low,Closed,Fraud
+RSK00440,BCU00266,2026-06-05,Unusual Transaction,Low,Open,Fraud
+RSK00441,BCU00145,2026-10-14,KYC Review,Critical,Open,Compliance
+RSK00442,BCU00169,2026-06-06,Repeated Failed Login,Low,Closed,Credit Risk
+RSK00443,BCU00879,2026-05-25,Unusual Transaction,Low,Closed,Operations
+RSK00444,BCU00145,2026-08-18,Unusual Transaction,High,Closed,Compliance
+RSK00445,BCU00424,2026-06-06,High Value Transfer,High,Under Review,Compliance
+RSK00446,BCU00301,2026-08-28,Repeated Failed Login,High,Under Review,Credit Risk
+RSK00447,BCU00524,2026-09-22,KYC Review,Low,Closed,Compliance
+RSK00448,BCU00882,2026-10-01,Overdue Loan,Critical,Open,Operations
+RSK00449,BCU00214,2026-05-31,Repeated Failed Login,Medium,Closed,Fraud
+RSK00450,BCU00876,2026-06-13,Repeated Failed Login,Low,Closed,Credit Risk
+RSK00451,BCU00459,2026-09-17,Overdue Loan,Critical,Closed,Fraud
+RSK00452,BCU00940,2026-07-05,KYC Review,High,Closed,Operations
+RSK00453,BCU00108,2026-06-16,Overdue Loan,Critical,Under Review,Fraud
+RSK00454,BCU00382,2026-10-16,Overdue Loan,Low,Under Review,Operations
+RSK00455,BCU00700,2026-10-16,Unusual Transaction,Critical,Under Review,Compliance
+RSK00456,BCU01065,2026-07-13,Unusual Transaction,Medium,Under Review,Operations
+RSK00457,BCU00874,2026-09-20,Overdue Loan,Critical,Closed,Operations
+RSK00458,BCU00895,2026-07-27,High Value Transfer,Medium,Under Review,Compliance
+RSK00459,BCU00872,2026-10-23,Overdue Loan,Critical,Under Review,Compliance
+RSK00460,BCU00390,2026-08-27,High Value Transfer,Low,Under Review,Compliance
+RSK00461,BCU00839,2026-05-18,Repeated Failed Login,Low,Under Review,Credit Risk
+RSK00462,BCU00666,2026-08-30,High Value Transfer,Medium,Open,Compliance
+RSK00463,BCU01021,2026-05-09,KYC Review,Low,Under Review,Fraud
+RSK00464,BCU01169,2026-09-06,Unusual Transaction,Critical,Open,Credit Risk
+RSK00465,BCU00329,2026-05-01,KYC Review,Low,Open,Compliance
+RSK00466,BCU00122,2026-06-12,Unusual Transaction,Critical,Open,Operations
+RSK00467,BCU01155,2026-07-11,High Value Transfer,Medium,Under Review,Operations
+RSK00468,BCU00075,2026-06-26,KYC Review,High,Under Review,Fraud
+RSK00469,BCU00856,2026-06-15,High Value Transfer,Critical,Closed,Operations
+RSK00470,BCU00660,2026-08-22,High Value Transfer,Critical,Under Review,Compliance
+RSK00471,BCU00360,2026-05-18,KYC Review,Low,Open,Credit Risk
+RSK00472,BCU00875,2026-06-14,High Value Transfer,Low,Closed,Fraud
+RSK00473,BCU00117,2026-05-05,Overdue Loan,Low,Open,Credit Risk
+RSK00474,BCU00021,2026-07-17,Unusual Transaction,High,Open,Operations
+RSK00475,BCU00769,2026-06-28,Overdue Loan,Low,Under Review,Operations
+RSK00476,BCU00533,2026-06-01,Repeated Failed Login,High,Open,Operations
+RSK00477,BCU00906,2026-09-29,Unusual Transaction,High,Closed,Compliance
+RSK00478,BCU00605,2026-10-15,KYC Review,Low,Open,Operations
+RSK00479,BCU00916,2026-09-09,High Value Transfer,Low,Closed,Operations
+RSK00480,BCU00526,2026-06-25,Unusual Transaction,Low,Open,Fraud
+RSK00481,BCU00343,2026-10-08,Unusual Transaction,Low,Open,Compliance
+RSK00482,BCU00091,2026-08-16,Overdue Loan,Critical,Open,Compliance
+RSK00483,BCU00491,2026-10-22,High Value Transfer,High,Open,Fraud
+RSK00484,BCU00488,2026-09-01,Unusual Transaction,Critical,Open,Operations
+RSK00485,BCU00907,2026-06-06,Unusual Transaction,Low,Open,Operations
+RSK00486,BCU00784,2026-06-12,Overdue Loan,Critical,Closed,Fraud
+RSK00487,BCU00202,2026-07-16,High Value Transfer,High,Open,Compliance
+RSK00488,BCU00721,2026-09-03,Repeated Failed Login,Critical,Under Review,Fraud
+RSK00489,BCU00152,2026-05-04,KYC Review,Critical,Open,Compliance
+RSK00490,BCU00456,2026-07-02,High Value Transfer,Low,Open,Fraud
+RSK00491,BCU00478,2026-10-04,Overdue Loan,Medium,Open,Credit Risk
+RSK00492,BCU01056,2026-10-20,Overdue Loan,High,Closed,Compliance
+RSK00493,BCU01083,2026-09-02,Repeated Failed Login,Medium,Closed,Operations
+RSK00494,BCU00349,2026-09-07,High Value Transfer,Low,Under Review,Operations
+RSK00495,BCU00785,2026-06-07,High Value Transfer,High,Open,Operations
+RSK00496,BCU00674,2026-07-13,High Value Transfer,High,Open,Fraud
+RSK00497,BCU00197,2026-10-27,High Value Transfer,High,Closed,Fraud
+RSK00498,BCU00806,2026-08-27,High Value Transfer,Medium,Open,Credit Risk
+RSK00499,BCU00473,2026-05-13,KYC Review,High,Under Review,Fraud
+RSK00500,BCU00249,2026-08-19,Unusual Transaction,Medium,Under Review,Operations

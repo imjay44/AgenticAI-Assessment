@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: smartops-decision-intelligence
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=super-secret-jwt-key-for-banking-decision-intelligence-2026
+      - DATABASE_URL=sqlite:///./data/banking_intelligence.db
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - LLM_MODEL=gemini-2.0-flash
+    volumes:
+      - ./data:/app/data
+      - ./sample_reports:/app/sample_reports
+    restart: unless-stopped
