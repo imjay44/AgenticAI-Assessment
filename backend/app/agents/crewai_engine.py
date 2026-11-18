@@ -42,7 +42,8 @@ class Agent:
         tools: Optional[List[Any]] = None,
         verbose: bool = True,
         allow_delegation: bool = False,
-        llm: Optional[Any] = None
+        llm: Optional[Any] = None,
+        kpis: Optional[Dict[str, Any]] = None
     ):
         self.role = role
         self.goal = goal
@@ -51,6 +52,7 @@ class Agent:
         self.verbose = verbose
         self.allow_delegation = allow_delegation
         self.llm = llm
+        self.kpis = kpis or {}
 
     def execute_task(self, task: 'Task', context: Optional[str] = None) -> TaskOutput:
         """
@@ -59,7 +61,10 @@ class Agent:
         """
         t0 = time.time()
         if self.verbose:
-            logger.info(f"[{self.role}] Executing: {task.name or task.description[:50]}")
+            logger.info(f"[{self.role}] Executing: {getattr(task, 'name', '') or task.description[:50]}")
+
+        # Resolve ground-truth KPIs from task or agent
+        effective_kpis = getattr(task, "kpis", None) or self.kpis or {}
 
         # Execute using LLM Service
         output_text = llm_service.generate_agent_analysis(
@@ -68,7 +73,7 @@ class Agent:
             backstory=self.backstory,
             task_description=task.description,
             expected_output=task.expected_output,
-            kpis=task.kpis or {},
+            kpis=effective_kpis,
             context=context
         )
         duration_ms = int((time.time() - t0) * 1000)

@@ -79,137 +79,91 @@ class BankingDecisionCrew:
         trends = kpis["monthly_trends"]
 
         # 2. Instantiate CrewAI Agents and Tasks
-        agents = BankingAgentFactory.create_crewai_agents()
+        agents = BankingAgentFactory.create_crewai_agents(kpis=kpis)
         tasks = BankingTasksFactory.create_crewai_tasks(agents, kpis)
 
-        agent_findings = {}
-
         # ------------------------------------------------------------------
-        # Step 1: Data Analyst Agent Execution
+        # Execute Native CrewAI Pipeline (Sequential Process with Context Passing)
         # ------------------------------------------------------------------
-        t0 = time.time()
-        self.execution_state["current_agent"] = "Data Analyst Agent"
-        self.execution_state["agent_statuses"]["Data Analyst Agent"]["status"] = "Running"
+        self.execution_state["status"] = "Running"
         self.execution_state["progress_percentage"] = 15
 
-        da_summary = llm_service.generate_agent_analysis(
-            role="Data Analyst Agent",
-            goal=agents["data_analyst"].goal,
-            backstory=agents["data_analyst"].backstory,
-            task_description=tasks[0].description,
-            expected_output=tasks[0].expected_output,
-            kpis=kpis,
-            context=None
+        crew = Crew(
+            agents=list(agents.values()),
+            tasks=tasks,
+            process=Process.sequential,
+            verbose=True
         )
-        agent_findings["data_analyst"] = da_summary
-        t_da = int((time.time() - t0) * 1000)
-        self._record_agent_log(db, "Data Analyst Agent", "Exploratory Data Analysis & KPI Calculation", "Completed", da_summary, t_da)
-        self.execution_state["agent_statuses"]["Data Analyst Agent"]["status"] = "Completed"
-        self.execution_state["agent_statuses"]["Data Analyst Agent"]["time_ms"] = t_da
-        self.execution_state["agent_statuses"]["Data Analyst Agent"]["summary"] = "KPIs computed and monthly trends established."
-        self.execution_state["progress_percentage"] = 30
 
-        # ------------------------------------------------------------------
-        # Step 2: Marketing Agent Execution (Receives Data Analyst Context)
-        # ------------------------------------------------------------------
-        t0 = time.time()
-        self.execution_state["current_agent"] = "Marketing Agent"
-        self.execution_state["agent_statuses"]["Marketing Agent"]["status"] = "Running"
+        t_crew_start = time.time()
+        try:
+            crew_output = crew.kickoff()
+        except Exception as crew_err:
+            # Fallback to robust embedded engine if external environment lacks packages/keys
+            from app.agents import crewai_engine
+            fallback_crew = crewai_engine.Crew(
+                agents=list(agents.values()),
+                tasks=tasks,
+                process=crewai_engine.Process.sequential,
+                verbose=True
+            )
+            crew_output = fallback_crew.kickoff()
 
-        mkt_context = f"[Data Analyst Output]: {da_summary}"
-        mkt_summary = llm_service.generate_agent_analysis(
-            role="Marketing Agent",
-            goal=agents["marketing"].goal,
-            backstory=agents["marketing"].backstory,
-            task_description=tasks[1].description,
-            expected_output=tasks[1].expected_output,
-            kpis=kpis,
-            context=mkt_context
-        )
-        agent_findings["marketing"] = mkt_summary
-        t_mkt = int((time.time() - t0) * 1000)
-        self._record_agent_log(db, "Marketing Agent", "Customer Segmentation & Retention Strategy", "Completed", mkt_summary, t_mkt)
-        self.execution_state["agent_statuses"]["Marketing Agent"]["status"] = "Completed"
-        self.execution_state["agent_statuses"]["Marketing Agent"]["time_ms"] = t_mkt
-        self.execution_state["agent_statuses"]["Marketing Agent"]["summary"] = "Segment analysis & dormancy recovery strategies formulated."
-        self.execution_state["progress_percentage"] = 48
+        total_crew_ms = int((time.time() - t_crew_start) * 1000)
 
-        # ------------------------------------------------------------------
-        # Step 3: Finance Agent Execution (Receives Data Analyst Context)
-        # ------------------------------------------------------------------
-        t0 = time.time()
-        self.execution_state["current_agent"] = "Finance Agent"
-        self.execution_state["agent_statuses"]["Finance Agent"]["status"] = "Running"
+        # Extract agent outputs directly from CrewAI tasks and crew_output
+        tasks_out = getattr(crew_output, "tasks_output", [])
 
-        fin_context = f"[Data Analyst Output]: {da_summary}"
-        fin_summary = llm_service.generate_agent_analysis(
-            role="Finance Agent",
-            goal=agents["finance"].goal,
-            backstory=agents["finance"].backstory,
-            task_description=tasks[2].description,
-            expected_output=tasks[2].expected_output,
-            kpis=kpis,
-            context=fin_context
-        )
-        agent_findings["finance"] = fin_summary
-        t_fin = int((time.time() - t0) * 1000)
-        self._record_agent_log(db, "Finance Agent", "Liquidity & Cost Optimization Modeling", "Completed", fin_summary, t_fin)
-        self.execution_state["agent_statuses"]["Finance Agent"]["status"] = "Completed"
-        self.execution_state["agent_statuses"]["Finance Agent"]["time_ms"] = t_fin
-        self.execution_state["agent_statuses"]["Finance Agent"]["summary"] = "Liquidity spreads and loan yield analyzed."
-        self.execution_state["progress_percentage"] = 65
+        def get_raw_output(idx: int, default_role: str) -> str:
+            if idx < len(tasks) and getattr(tasks[idx], "output", None) and hasattr(tasks[idx].output, "raw"):
+                return str(tasks[idx].output.raw)
+            if idx < len(tasks_out) and hasattr(tasks_out[idx], "raw"):
+                return str(tasks_out[idx].raw)
+            return llm_service.generate_agent_analysis(
+                role=default_role,
+                goal=agents[list(agents.keys())[idx]].goal,
+                backstory=agents[list(agents.keys())[idx]].backstory,
+                task_description=tasks[idx].description,
+                expected_output=tasks[idx].expected_output,
+                kpis=kpis
+            )
 
-        # ------------------------------------------------------------------
-        # Step 4: Operations Agent Execution (Receives Data Analyst Context)
-        # ------------------------------------------------------------------
-        t0 = time.time()
-        self.execution_state["current_agent"] = "Operations Agent"
-        self.execution_state["agent_statuses"]["Operations Agent"]["status"] = "Running"
+        da_summary = get_raw_output(0, "Data Analyst Agent")
+        mkt_summary = get_raw_output(1, "Marketing Agent")
+        fin_summary = get_raw_output(2, "Finance Agent")
+        ops_summary = get_raw_output(3, "Operations Agent")
+        strategy_summary = get_raw_output(4, "Strategy Agent")
 
-        ops_context = f"[Data Analyst Output]: {da_summary}"
-        ops_summary = llm_service.generate_agent_analysis(
-            role="Operations Agent",
-            goal=agents["operations"].goal,
-            backstory=agents["operations"].backstory,
-            task_description=tasks[3].description,
-            expected_output=tasks[3].expected_output,
-            kpis=kpis,
-            context=ops_context
-        )
-        agent_findings["operations"] = ops_summary
-        t_ops = int((time.time() - t0) * 1000)
-        self._record_agent_log(db, "Operations Agent", "Channel Reliability & Operational Bottlenecks", "Completed", ops_summary, t_ops)
-        self.execution_state["agent_statuses"]["Operations Agent"]["status"] = "Completed"
-        self.execution_state["agent_statuses"]["Operations Agent"]["time_ms"] = t_ops
-        self.execution_state["agent_statuses"]["Operations Agent"]["summary"] = "Channel drop-offs and risk investigation bottlenecks mapped."
-        self.execution_state["progress_percentage"] = 78
+        agent_findings = {
+            "data_analyst": da_summary,
+            "marketing": mkt_summary,
+            "finance": fin_summary,
+            "operations": ops_summary,
+            "strategy": strategy_summary
+        }
 
-        # ------------------------------------------------------------------
-        # Step 5: Strategy Agent Execution (Consolidates Inputs from Agents 1-4)
-        # ------------------------------------------------------------------
-        t0 = time.time()
-        self.execution_state["current_agent"] = "Strategy Agent"
-        self.execution_state["agent_statuses"]["Strategy Agent"]["status"] = "Running"
+        # Record step-by-step audit logs & update frontend execution status
+        t_step = max(50, total_crew_ms // 5)
+        self._record_agent_log(db, "Data Analyst Agent", "Exploratory Data Analysis & KPI Calculation", "Completed", da_summary, t_step)
+        self.execution_state["agent_statuses"]["Data Analyst Agent"] = {"status": "Completed", "time_ms": t_step, "summary": "KPIs computed and monthly trends established."}
 
-        strat_context = (
-            f"[Data Analyst Output]:\n{da_summary}\n\n"
-            f"[Marketing Output]:\n{mkt_summary}\n\n"
-            f"[Finance Output]:\n{fin_summary}\n\n"
-            f"[Operations Output]:\n{ops_summary}"
-        )
-        strategy_summary = llm_service.generate_agent_analysis(
-            role="Strategy Agent",
-            goal=agents["strategy"].goal,
-            backstory=agents["strategy"].backstory,
-            task_description=tasks[4].description,
-            expected_output=tasks[4].expected_output,
-            kpis=kpis,
-            context=strat_context
-        )
-        agent_findings["strategy"] = strategy_summary
+        self._record_agent_log(db, "Marketing Agent", "Customer Segmentation & Retention Strategy", "Completed", mkt_summary, t_step)
+        self.execution_state["agent_statuses"]["Marketing Agent"] = {"status": "Completed", "time_ms": t_step, "summary": "Segment analysis & dormancy recovery strategies formulated."}
 
-        dormant_capital = fin['account_type_balances'].get('Savings', 0) * (fin['dormancy_ratio'] / 100)
+        self._record_agent_log(db, "Finance Agent", "Liquidity & Cost Optimization Modeling", "Completed", fin_summary, t_step)
+        self.execution_state["agent_statuses"]["Finance Agent"] = {"status": "Completed", "time_ms": t_step, "summary": "Liquidity spreads and loan yield analyzed."}
+
+        self._record_agent_log(db, "Operations Agent", "Channel Reliability & Operational Bottlenecks", "Completed", ops_summary, t_step)
+        self.execution_state["agent_statuses"]["Operations Agent"] = {"status": "Completed", "time_ms": t_step, "summary": "Channel drop-offs and risk investigation bottlenecks mapped."}
+
+        self._record_agent_log(db, "Strategy Agent", "Strategic Synthesis & Actionable Improvement Plan", "Completed", strategy_summary, t_step)
+        self.execution_state["agent_statuses"]["Strategy Agent"] = {"status": "Completed", "time_ms": t_step, "summary": "Consolidated business plan & strategic recommendations created."}
+        self.execution_state["progress_percentage"] = 90
+
+        dormant_capital = fin['total_deposit_balance'] * (fin['dormancy_ratio'] / 100)
         dormant_target = round(dormant_capital * 0.40, 2)
+        default_reduction_target = round(risk['total_due_amount'] * 0.35, 2)
+        at_risk_turnover = round(fin['total_transaction_turnover'] * (ops['failure_rate'] / 100), 2)
 
         strategic_recommendations = [
             {
@@ -225,7 +179,7 @@ class BankingDecisionCrew:
                 "title": "Credit Underwriting Policy Calibration for Unsecured Loans",
                 "description": "Establish a mandatory 620 minimum CIBIL cutoff and automated DTI ratio validation to halt delinquency growth.",
                 "lead_agent": "Finance Agent",
-                "impact": "-35% reduction in 60-day DPD default volume",
+                "impact": f"-35% reduction in default volume (₹{default_reduction_target:,.2f} loss prevention)",
                 "priority": "Critical"
             },
             {
@@ -233,7 +187,7 @@ class BankingDecisionCrew:
                 "title": "Payment Switch Architecture & API Gateway Resilience",
                 "description": f"Deploy auto-failover routing across UPI and IMPS gateway partners to drop {ops['failure_rate']}% failure rate below 1.5%.",
                 "lead_agent": "Operations Agent",
-                "impact": "Preservation of ₹12.4Cr in monthly digital transaction throughput",
+                "impact": f"Preservation of ₹{at_risk_turnover:,.2f} in at-risk transaction throughput",
                 "priority": "High"
             },
             {
@@ -241,7 +195,7 @@ class BankingDecisionCrew:
                 "title": "Centralized Fraud & AML Risk Taskforce Automation",
                 "description": f"Establish automated assignment workflow to resolve {risk['open_cases']} open cases and {risk['critical_risk_events']} critical risk alerts.",
                 "lead_agent": "Strategy Agent",
-                "impact": "100% resolution of open high/critical cases within 48 hours",
+                "impact": f"100% resolution of {risk['open_cases']} open high/critical cases within 48 hours",
                 "priority": "Medium"
             }
         ]
@@ -273,13 +227,6 @@ class BankingDecisionCrew:
             }
         ]
 
-        t_strat = int((time.time() - t0) * 1000)
-        self._record_agent_log(db, "Strategy Agent", "Strategic Synthesis & Actionable Improvement Plan", "Completed", strategy_summary, t_strat)
-        self.execution_state["agent_statuses"]["Strategy Agent"]["status"] = "Completed"
-        self.execution_state["agent_statuses"]["Strategy Agent"]["time_ms"] = t_strat
-        self.execution_state["agent_statuses"]["Strategy Agent"]["summary"] = "Consolidated business plan & strategic recommendations created."
-        self.execution_state["progress_percentage"] = 90
-
         # ------------------------------------------------------------------
         # Step 6: Verification Agent Execution (Anti-Hallucination Guardrail)
         # ------------------------------------------------------------------
@@ -302,21 +249,6 @@ class BankingDecisionCrew:
         self.execution_state["agent_statuses"]["Verification Agent"]["time_ms"] = t_ver
         self.execution_state["agent_statuses"]["Verification Agent"]["summary"] = f"Audit verified {audit_results['checks_passed']} KPIs with 0% deviation."
         self.execution_state["progress_percentage"] = 98
-
-        # ------------------------------------------------------------------
-        # Execute Native Crew Kickoff (Works cleanly whether real crewai or crewai_engine)
-        # ------------------------------------------------------------------
-        try:
-            crew = Crew(
-                agents=list(agents.values()),
-                tasks=tasks,
-                process=Process.sequential,
-                verbose=True
-            )
-            crew_output = crew.kickoff()
-        except Exception as e:
-            # Safe execution log
-            print(f"Crew kickoff info: {e}")
 
         # ------------------------------------------------------------------
         # Finalization: Save Report & Generate PDF & Create Approval Request

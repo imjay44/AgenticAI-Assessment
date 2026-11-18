@@ -1,3 +1,10 @@
+databases:
+  - name: banking-intelligence-postgres
+    databaseName: banking_intelligence
+    user: banking_admin
+    plan: free
+    region: oregon
+
 services:
   - type: web
     name: banking-intelligence-backend
@@ -15,6 +22,10 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: DATABASE_URL
-        value: sqlite:///./data/banking_intelligence.db
+        fromDatabase:
+          name: banking-intelligence-postgres
+          property: connectionString
       - key: LLM_MODEL
-        value: gemini-2.0-flash
+        value: gemini-1.5-flash
+      - key: GEMINI_API_KEY
+        sync: false

@@ -206,15 +206,16 @@ class LLMService:
         }
 
     def _call_gemini(self, system_instruction: str, user_prompt: str) -> Optional[str]:
-        """Calls Google Gemini REST API."""
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={self.gemini_key}"
+        """Calls Google Gemini REST API using configured LLM_MODEL."""
+        model_name = self.model or "gemini-1.5-flash"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={self.gemini_key}"
         headers = {"Content-Type": "application/json"}
         payload = {
             "system_instruction": {"parts": [{"text": system_instruction}]},
             "contents": [{"parts": [{"text": user_prompt}]}],
             "generationConfig": {"temperature": self.temperature, "maxOutputTokens": 800}
         }
-        with httpx.Client(timeout=15.0) as client:
+        with httpx.Client(timeout=3.0) as client:
             resp = client.post(url, headers=headers, json=payload)
             if resp.status_code == 200:
                 data = resp.json()
@@ -237,7 +238,7 @@ class LLMService:
             "temperature": self.temperature,
             "max_tokens": 800
         }
-        with httpx.Client(timeout=15.0) as client:
+        with httpx.Client(timeout=3.0) as client:
             resp = client.post(url, headers=headers, json=payload)
             if resp.status_code == 200:
                 data = resp.json()

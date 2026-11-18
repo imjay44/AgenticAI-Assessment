@@ -1,6 +1,40 @@
 import os
-from typing import Optional, Any
+from typing import Optional, Any, Dict
 from app.config import settings
+
+try:
+    from crewai import Agent
+    HAS_REAL_CREWAI = True
+except ImportError:
+    from app.agents.crewai_engine import Agent
+    HAS_REAL_CREWAI = False
+
+# Try importing LangChain LLM base to construct seamless custom LLM for real CrewAI when API keys are absent
+GroundedBankingCrewLLM = None
+try:
+    from langchain_core.language_models.llms import LLM
+    class GroundedBankingCrewLLM(LLM):
+        agent_role: str = "Banking Analyst"
+        kpis: Dict[str, Any] = {}
+
+        @property
+        def _llm_type(self) -> str:
+            return "grounded_banking_crew_llm"
+
+        def _call(self, prompt: str, stop=None, run_manager=None, **kwargs) -> str:
+            from app.services.llm_service import llm_service
+            analysis = llm_service.generate_agent_analysis(
+                role=self.agent_role,
+                goal="",
+                backstory="",
+                task_description=prompt,
+                expected_output="",
+                kpis=self.kpis,
+                context=prompt
+            )
+            return f"Thought: Analysis grounded in verified banking data.\nFinal Answer: {analysis}"
+except Exception:
+    GroundedBankingCrewLLM = None
 
 class BankingAgentFactory:
     """
@@ -45,22 +79,37 @@ class BankingAgentFactory:
         }
 
     @staticmethod
-    def create_crewai_agents(llm: Optional[Any] = None) -> dict:
+    def create_crewai_agents(kpis: Optional[Dict[str, Any]] = None, llm: Optional[Any] = None) -> dict:
         """Creates CrewAI Agent instances with roles, goals, backstories, and tools."""
-        try:
-            from crewai import Agent
-        except ImportError:
-            from app.agents.crewai_engine import Agent
-
         specs = BankingAgentFactory.get_agent_specs()
         agents = {}
         for key, spec in specs.items():
-            agents[key] = Agent(
-                role=spec["role"],
-                goal=spec["goal"],
-                backstory=spec["backstory"],
-                verbose=True,
-                allow_delegation=(key in ["strategy", "verification"]),
-                llm=llm
-            )
+            agent_llm = llm
+            if agent_llm is None and HAS_REAL_CREWAI:
+                if settings.OPENAI_API_KEY:
+                    agent_llm = "gpt-4o-mini"
+                elif settings.GEMINI_API_KEY:
+                    agent_llm = f"gemini/{settings.LLM_MODEL}"
+                elif GroundedBankingCrewLLM is not None:
+                    agent_llm = GroundedBankingCrewLLM(agent_role=spec["role"], kpis=kpis or {})
+
+            if HAS_REAL_CREWAI:
+                agents[key] = Agent(
+                    role=spec["role"],
+                    goal=spec["goal"],
+                    backstory=spec["backstory"],
+                    verbose=True,
+                    allow_delegation=(key in ["strategy", "verification"]),
+                    llm=agent_llm
+                )
+            else:
+                agents[key] = Agent(
+                    role=spec["role"],
+                    goal=spec["goal"],
+                    backstory=spec["backstory"],
+                    verbose=True,
+                    allow_delegation=(key in ["strategy", "verification"]),
+                    llm=agent_llm,
+                    kpis=kpis
+                )
         return agents

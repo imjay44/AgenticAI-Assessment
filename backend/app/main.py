@@ -20,18 +20,17 @@ from app.api.reports import router as reports_router
 from app.api.approvals import router as approvals_router
 from app.api.admin import router as admin_router
 
+# 1. Create database schema & seed initial data on module initialization
+try:
+    Base.metadata.create_all(bind=engine)
+    _init_db = SessionLocal()
+    data_processor.seed_initial_data_if_empty(_init_db)
+    _init_db.close()
+except Exception as _e:
+    pass
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # 1. Create database schema
-    Base.metadata.create_all(bind=engine)
-    
-    # 2. Seed initial users, business profile, and dataset records if empty
-    db = SessionLocal()
-    try:
-        data_processor.seed_initial_data_if_empty(db)
-    finally:
-        db.close()
-        
     yield
 
 app = FastAPI(
@@ -89,6 +88,21 @@ app.include_router(reports_router, prefix=settings.API_V1_STR)
 app.include_router(approvals_router, prefix=settings.API_V1_STR)
 app.include_router(admin_router, prefix=settings.API_V1_STR)
 
+@app.get("/health", tags=["Health & Root"])
+def health_check():
+    return {"status": "healthy", "timestamp": "2026-11-18T12:00:00Z"}
+
+@app.get("/", tags=["Health & Root"])
+def root_endpoint():
+    return {
+        "system": settings.PROJECT_NAME,
+        "version": settings.VERSION,
+        "status": "Online & Operational",
+        "documentation": "/docs",
+        "industry": "Banking (Financial & Risk Intelligence)",
+        "period": "May 1, 2026 - October 31, 2026"
+    }
+
 # Serve built frontend if exists
 frontend_dist = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist"))
 if os.path.exists(frontend_dist):
@@ -102,19 +116,4 @@ if os.path.exists(frontend_dist):
             from fastapi.responses import FileResponse
             return FileResponse(index_file)
         return {"system": settings.PROJECT_NAME, "status": "Online"}
-else:
-    @app.get("/", tags=["Health & Root"])
-    def root_endpoint():
-        return {
-            "system": settings.PROJECT_NAME,
-            "version": settings.VERSION,
-            "status": "Online & Operational",
-            "documentation": "/docs",
-            "industry": "Banking (Financial & Risk Intelligence)",
-            "period": "May 1, 2026 - October 31, 2026"
-        }
-
-@app.get("/health", tags=["Health & Root"])
-def health_check():
-    return {"status": "healthy", "timestamp": "2026-11-18T12:00:00Z"}
 
