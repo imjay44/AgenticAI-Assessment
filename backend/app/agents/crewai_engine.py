@@ -1,6 +1,6 @@
 import time
 import logging
-from typing import List, Dict, Any, Optional, Union
+from typing import List, Dict, Any, Optional
 from enum import Enum
 
 from app.services.llm_service import llm_service
@@ -32,6 +32,7 @@ class CrewOutput:
 class Agent:
     """
     CrewAI-compatible Agent class representing an autonomous banking intelligence specialist.
+    Powered by LLM reasoning with ground-truth data tools.
     """
     def __init__(
         self,
@@ -53,25 +54,23 @@ class Agent:
 
     def execute_task(self, task: 'Task', context: Optional[str] = None) -> TaskOutput:
         """
-        Executes an assigned task by combining the agent's backstory, goal,
-        task instructions, predecessor context, and tools.
+        Executes the assigned task by passing task description, predecessor context,
+        and persona to the LLM Service (Gemini/OpenAI or grounded analytical engine).
         """
         t0 = time.time()
         if self.verbose:
-            logger.info(f"[{self.role}] Starting task: {task.name or task.description[:60]}")
+            logger.info(f"[{self.role}] Executing: {task.name or task.description[:50]}")
 
-        prompt = (
-            f"Role: {self.role}\n"
-            f"Goal: {self.goal}\n"
-            f"Backstory: {self.backstory}\n\n"
-            f"Task: {task.description}\n"
-            f"Expected Output: {task.expected_output}\n"
+        # Execute using LLM Service
+        output_text = llm_service.generate_agent_analysis(
+            role=self.role,
+            goal=self.goal,
+            backstory=self.backstory,
+            task_description=task.description,
+            expected_output=task.expected_output,
+            kpis=task.kpis or {},
+            context=context
         )
-        if context:
-            prompt += f"\n--- Context from Previous Collaborative Agents ---\n{context}\n"
-
-        # Execute using LLM Service or grounded domain logic
-        output_text = task.execute_fn(prompt, context) if task.execute_fn else task.description
         duration_ms = int((time.time() - t0) * 1000)
 
         return TaskOutput(
@@ -84,7 +83,7 @@ class Agent:
 class Task:
     """
     CrewAI-compatible Task class defining an agent's objective, expected output,
-    and upstream context dependencies.
+    upstream context dependencies, and tools.
     """
     def __init__(
         self,
@@ -94,7 +93,7 @@ class Task:
         name: Optional[str] = None,
         context: Optional[List['Task']] = None,
         tools: Optional[List[Any]] = None,
-        execute_fn: Optional[Any] = None
+        kpis: Optional[Dict[str, Any]] = None
     ):
         self.description = description
         self.expected_output = expected_output
@@ -102,7 +101,7 @@ class Task:
         self.name = name or description[:40]
         self.context = context or []
         self.tools = tools or []
-        self.execute_fn = execute_fn
+        self.kpis = kpis or {}
         self.output: Optional[TaskOutput] = None
 
 class Crew:
@@ -124,13 +123,13 @@ class Crew:
 
     def kickoff(self, inputs: Optional[Dict[str, Any]] = None) -> CrewOutput:
         """
-        Kicks off sequential agent execution, passing the output of previous tasks
-        into the downstream tasks specified in their context dependency list.
+        Kicks off sequential agent execution, gathering output from predecessor tasks
+        in context=[...] and passing it into downstream agents.
         """
         tasks_output: List[TaskOutput] = []
 
-        for idx, task in enumerate(self.tasks):
-            # Gather context from predecessor tasks
+        for task in self.tasks:
+            # Collect outputs from upstream context tasks
             context_pieces = []
             for ctx_task in task.context:
                 if ctx_task.output:

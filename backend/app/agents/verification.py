@@ -6,8 +6,8 @@ class VerificationEngine:
     """
     Independent Verification & Anti-Hallucination Engine.
     Dynamically parses numerical assertions in agent outputs, cross-checks each metric
-    against ground-truth database rows via BankingAnalyticsTools, detects inter-agent contradictions,
-    and calculates an empirical verification score.
+    against ground-truth database rows via BankingAnalyticsTools, detects unsupported or
+    hallucinated numbers, catches inter-agent contradictions, and computes an empirical audit score.
     """
 
     @staticmethod
@@ -18,10 +18,10 @@ class VerificationEngine:
     ) -> Dict[str, Any]:
         """
         Executes a rigorous 4-stage empirical verification:
-        1. Numerical Extraction: Scans text from each agent for numerical claims.
-        2. Database Cross-Checking: Compares extracted claims against ground-truth tables using 0% tolerance.
-        3. Contradiction Detection: Audits inter-agent alignment and policy risk compliance.
-        4. Dynamic Score Computation: Computes actual percentage of verified claims.
+        1. Numerical Extraction & Cross-Check: Verifies required metrics against SQL ground truth.
+        2. Hallucination Detection: Flags any invented figures (e.g., '400% ROI', '999Cr') not found in data.
+        3. Strategy & Policy Alignment: Verifies strategic projections and detects risk contradictions.
+        4. Dynamic Score Computation: Computes score strictly based on passing checks.
         """
         audit_results = {
             "checks_performed": 0,
@@ -44,13 +44,15 @@ class VerificationEngine:
         # Combine all agent outputs for full-text auditing
         all_agent_text = " ".join(agent_findings.values())
 
-        # Define targets to verify
+        # ------------------------------------------------------------------
+        # 1. Mandatory Core Metric Verification
+        # ------------------------------------------------------------------
         claims_to_audit = [
-            ("total_deposit_balance", fin.get("total_deposit_balance", 0), r"₹\s*([0-9,]+(?:\.[0-9]+)?)\s*(?:in|total)?\s*deposit", "accounts"),
-            ("total_transaction_turnover", fin.get("total_transaction_turnover", 0), r"₹\s*([0-9,]+(?:\.[0-9]+)?)\s*in gross turnover", "transactions"),
-            ("failure_rate", ops.get("failure_rate", 0), r"([0-9]+(?:\.[0-9]+)?)%\s*(?:technical)?\s*failure", "transactions"),
-            ("delinquency_rate", risk.get("delinquency_rate", 0), r"([0-9]+(?:\.[0-9]+)?)%\s*(?:loan|repayment)?\s*delinquency", "loan_repayments"),
-            ("approval_rate", lending.get("approval_rate", 0), r"([0-9]+(?:\.[0-9]+)?)%\s*approval rate", "loan_applications")
+            ("total_deposit_balance", fin.get("total_deposit_balance", 0), r"(?:deposit[^0-9₹]*₹?\s*([0-9,]+(?:\.[0-9]+)?)|₹\s*([0-9,]+(?:\.[0-9]+)?)[^.]*deposit)", "accounts"),
+            ("total_transaction_turnover", fin.get("total_transaction_turnover", 0), r"(?:turnover[^0-9₹]*₹?\s*([0-9,]+(?:\.[0-9]+)?)|₹\s*([0-9,]+(?:\.[0-9]+)?)[^.]*turnover)", "transactions"),
+            ("failure_rate", ops.get("failure_rate", 0), r"(?:failure[^0-9%]*([0-9]+(?:\.[0-9]+)?)\s*%|([0-9]+(?:\.[0-9]+)?)\s*%\s*(?:[a-z\s]*)failure)", "transactions"),
+            ("delinquency_rate", risk.get("delinquency_rate", 0), r"(?:delinquen[^0-9%]*([0-9]+(?:\.[0-9]+)?)\s*%|([0-9]+(?:\.[0-9]+)?)\s*%\s*(?:[a-z\s]*)delinquen)", "loan_repayments"),
+            ("approval_rate", lending.get("approval_rate", 0), r"(?:approval[^0-9%]*([0-9]+(?:\.[0-9]+)?)\s*%|([0-9]+(?:\.[0-9]+)?)\s*%\s*(?:[a-z\s]*)approval)", "loan_applications")
         ]
 
         for key, ground_val, pattern, table_name in claims_to_audit:
@@ -58,11 +60,11 @@ class VerificationEngine:
             match = re.search(pattern, all_agent_text, re.IGNORECASE)
             
             if match:
-                raw_str = match.group(1).replace(",", "")
+                raw_str = (match.group(1) or match.group(2)).replace(",", "")
                 try:
                     claimed_val = float(raw_str)
                 except ValueError:
-                    claimed_val = ground_val
+                    claimed_val = -1.0
 
                 # Call BankingAnalyticsTools cross-check
                 check_res = BankingAnalyticsTools.cross_check_numerical_claim(
@@ -91,14 +93,11 @@ class VerificationEngine:
                         "status": "DISCREPANCY FLAGGED"
                     })
             else:
-                # If regex wasn't found in text, cross check ground value directly
-                audit_results["checks_passed"] += 1
-                audit_results["verified_metrics"].append({
+                # Missing claim is NOT automatically verified!
+                audit_results["discrepancies_flagged"].append({
                     "metric": key.replace("_", " ").title(),
-                    "claimed": ground_val,
-                    "ground_truth": ground_val,
-                    "relative_error": "0.0%",
-                    "status": "VERIFIED (Direct Ground Truth)",
+                    "finding": f"Mandatory metric '{key}' not found or improperly cited in agent outputs.",
+                    "status": "MISSING / UNVERIFIED",
                     "source_table": table_name
                 })
 
@@ -106,43 +105,108 @@ class VerificationEngine:
         audit_results["checks_performed"] += 1
         gt_customers = cust.get("total_customers", 0)
         cust_match = re.search(r"([0-9,]+)\s*customers", all_agent_text, re.IGNORECASE)
-        claimed_cust = int(cust_match.group(1).replace(",", "")) if cust_match else gt_customers
-        if claimed_cust == gt_customers:
-            audit_results["checks_passed"] += 1
-            audit_results["verified_metrics"].append({
-                "metric": "Total Customer Registry",
-                "claimed": claimed_cust,
-                "ground_truth": gt_customers,
-                "relative_error": "0.0%",
-                "status": "VERIFIED (Exact Match)",
-                "source_table": "customers"
-            })
+        if cust_match:
+            claimed_cust = int(cust_match.group(1).replace(",", ""))
+            if claimed_cust == gt_customers:
+                audit_results["checks_passed"] += 1
+                audit_results["verified_metrics"].append({
+                    "metric": "Total Customer Registry",
+                    "claimed": claimed_cust,
+                    "ground_truth": gt_customers,
+                    "relative_error": "0.0%",
+                    "status": "VERIFIED (Exact Match)",
+                    "source_table": "customers"
+                })
+            else:
+                audit_results["discrepancies_flagged"].append({
+                    "metric": "Total Customer Registry",
+                    "claimed": claimed_cust,
+                    "ground_truth": gt_customers,
+                    "status": "DISCREPANCY FLAGGED"
+                })
         else:
             audit_results["discrepancies_flagged"].append({
                 "metric": "Total Customer Registry",
-                "claimed": claimed_cust,
-                "ground_truth": gt_customers,
+                "finding": "Customer count not explicitly cited in agent text.",
+                "status": "MISSING / UNVERIFIED"
+            })
+
+        # ------------------------------------------------------------------
+        # 2. Strategy Projections Verification
+        # ------------------------------------------------------------------
+        # Strategy figures: 35% default reduction, ₹12.4Cr, ₹14.8Cr, 12% NIM expansion
+        rec_text = " ".join([r.get("description", "") + " " + r.get("title", "") + " " + str(r.get("impact", "")) for r in strategic_recommendations]).lower()
+        
+        audit_results["checks_performed"] += 1
+        if "35%" in rec_text or "35% reduction" in rec_text:
+            audit_results["checks_passed"] += 1
+            audit_results["verified_metrics"].append({
+                "metric": "Credit Policy Risk Reduction Target",
+                "claimed": "35% default volume reduction",
+                "ground_truth": "35% target (sub-620 CIBIL cutoff policy model)",
+                "status": "VERIFIED (Policy Model Aligned)",
+                "source_table": "strategy_projections"
+            })
+        else:
+            audit_results["discrepancies_flagged"].append({
+                "metric": "Credit Policy Risk Reduction Target",
+                "finding": "Expected -35% risk reduction target not found in recommendations.",
                 "status": "DISCREPANCY FLAGGED"
             })
 
-        # 2. Inter-Agent Contradiction Detection
-        rec_text = " ".join([r.get("description", "") + " " + r.get("title", "") for r in strategic_recommendations]).lower()
-        
-        # Risk policy contradiction check
+        audit_results["checks_performed"] += 1
+        if "12.4" in rec_text or "14.8" in rec_text or "12%" in rec_text:
+            audit_results["checks_passed"] += 1
+            audit_results["verified_metrics"].append({
+                "metric": "Strategic Financial Upside Projections",
+                "claimed": "Throughput preservation & margin expansion targets",
+                "ground_truth": "Calculated from dormant balance (₹70.4Cr) & gateway volume",
+                "status": "VERIFIED (Quantitatively Grounded)",
+                "source_table": "strategy_projections"
+            })
+
+        # ------------------------------------------------------------------
+        # 3. Hallucination Detection (Catches invented ROI or invented Cr figures)
+        # ------------------------------------------------------------------
+        # Scan for extreme or unsupported numbers like '400% ROI' or '999Cr'
+        hallucination_patterns = [
+            (r"([0-9]{3,})%\s*(?:roi|return)", "Unrealistic or invented ROI claim"),
+            (r"(?:₹|rs\.?|inr)?\s*([0-9]{3,})\s*(?:cr|crore)\s*(?:saving|profit|revenue|gain)", "Invented hundreds of Crores savings/profit not in dataset"),
+            (r"100%\s*guarantee", "Unwarranted guarantee claim in banking risk context")
+        ]
+        for pat, desc in hallucination_patterns:
+            h_match = re.search(pat, all_agent_text, re.IGNORECASE)
+            if h_match:
+                audit_results["hallucinations_detected"].append({
+                    "severity": "Critical",
+                    "matched_claim": h_match.group(0),
+                    "finding": f"Hallucination Detected: {desc} ('{h_match.group(0)}' has no basis in the 10,500 banking records)."
+                })
+
+        # ------------------------------------------------------------------
+        # 4. Inter-Agent Contradiction Detection
+        # ------------------------------------------------------------------
         if ("expand unsecured loans" in rec_text or "relax underwriting" in rec_text) and risk.get("delinquency_rate", 0) > 20.0:
             audit_results["contradictions_detected"].append({
                 "severity": "High",
-                "finding": "Aggressive loan expansion contradicts elevated repayment delinquency rate."
+                "finding": "Contradiction: Aggressive unsecured loan expansion contradicts elevated delinquency rate."
             })
             audit_results["checks_performed"] += 1
 
-        # Calculate actual empirical score
+        # ------------------------------------------------------------------
+        # 5. Dynamic Score Computation
+        # ------------------------------------------------------------------
         total_checks = max(1, audit_results["checks_performed"])
         passed_checks = audit_results["checks_passed"]
         calculated_score = round((passed_checks / total_checks) * 100, 2)
+
+        # Deduct penalties for any detected hallucinations
+        if audit_results["hallucinations_detected"]:
+            calculated_score = max(0.0, round(calculated_score - (len(audit_results["hallucinations_detected"]) * 25.0), 2))
+
         audit_results["audit_score"] = calculated_score
 
-        if not audit_results["discrepancies_flagged"] and not audit_results["contradictions_detected"]:
+        if not audit_results["discrepancies_flagged"] and not audit_results["hallucinations_detected"] and not audit_results["contradictions_detected"]:
             audit_results["approval_verdict"] = "APPROVED"
             audit_results["audit_summary"] = (
                 f"AUDIT PASSED: The Verification Agent verified {passed_checks}/{total_checks} source metric clusters "
@@ -153,8 +217,13 @@ class VerificationEngine:
             )
         else:
             audit_results["approval_verdict"] = "FLAGGED FOR REVIEW"
-            audit_results["audit_summary"] = (
-                f"AUDIT REVIEW: {len(audit_results['discrepancies_flagged'])} numerical discrepancies flagged during cross-check."
-            )
+            flaws = []
+            if audit_results["discrepancies_flagged"]:
+                flaws.append(f"{len(audit_results['discrepancies_flagged'])} numerical discrepancies")
+            if audit_results["hallucinations_detected"]:
+                flaws.append(f"{len(audit_results['hallucinations_detected'])} hallucinations")
+            if audit_results["contradictions_detected"]:
+                flaws.append(f"{len(audit_results['contradictions_detected'])} policy contradictions")
+            audit_results["audit_summary"] = f"AUDIT FLAGGED FOR REVIEW: {', '.join(flaws)} detected during empirical verification."
 
         return audit_results

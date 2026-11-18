@@ -17,7 +17,7 @@ class BankingTasksFactory:
     """
 
     @staticmethod
-    def create_crewai_tasks(agents: Dict[str, Any], kpis: Dict[str, Any]) -> List[Task]:
+    def create_crewai_tasks(agents: Dict[str, Any], kpis: Dict[str, Any]) -> List[Any]:
         """
         Creates real CrewAI Task objects with upstream context dependencies:
         - Marketing, Finance, Operations receive Data Analyst context.
@@ -32,7 +32,6 @@ class BankingTasksFactory:
 
         # Task 1: Data Analysis
         task_da = Task(
-            name="Exploratory & Quantitative Business Data Analysis",
             description=(
                 f"Perform deep quantitative analysis on the 6-month banking operations dataset (May 1 - Oct 31, 2026). "
                 f"Verify total customers ({cust['total_customers']}), total deposit balance (₹{fin['total_deposit_balance']:,.2f}), "
@@ -45,7 +44,6 @@ class BankingTasksFactory:
 
         # Task 2: Marketing Intelligence
         task_mkt = Task(
-            name="Customer Segmentation & Growth Opportunity Evaluation",
             description=(
                 f"Analyze customer segmentation across Priority ({cust['segment_breakdown'].get('Priority', 0)}), "
                 f"Corporate ({cust['segment_breakdown'].get('Corporate', 0)}), SME ({cust['segment_breakdown'].get('SME', 0)}), "
@@ -60,7 +58,6 @@ class BankingTasksFactory:
 
         # Task 3: Finance Intelligence
         task_fin = Task(
-            name="Revenue, Expense & Liquidity Optimization Analysis",
             description=(
                 f"Evaluate bank liquidity dynamics: Gross credits of ₹{fin['total_credits']:,.2f} versus debits of ₹{fin['total_debits']:,.2f}, "
                 f"resulting in net inflow of +₹{fin['net_liquidity_flow']:,.2f}. "
@@ -74,7 +71,6 @@ class BankingTasksFactory:
 
         # Task 4: Operations Intelligence
         task_ops = Task(
-            name="Operational Bottlenecks & Channel Reliability Diagnosis",
             description=(
                 f"Diagnose transaction channel throughput across 3,500 transactions. "
                 f"Audit digital failure rate of {ops['failure_rate']}% (exactly 171 technical failures) and 109 reversals (3.11%). "
@@ -88,7 +84,6 @@ class BankingTasksFactory:
 
         # Task 5: Strategy Synthesis
         task_strat = Task(
-            name="Consolidated Strategic Plan & Business Improvement Roadmap",
             description=(
                 "Synthesize inputs from Data Analyst, Marketing, Finance, and Operations Agents. "
                 "Synthesize findings into a unified 6-month executive roadmap with prioritized strategic initiatives, "
@@ -101,7 +96,6 @@ class BankingTasksFactory:
 
         # Task 6: Audit Verification
         task_ver = Task(
-            name="Independent Source-Data Verification & Hallucination Audit",
             description=(
                 "Independently audit all numerical claims, findings, and strategic proposals against ground-truth database rows. "
                 "Verify zero-hallucination tolerance across deposit balance, turnover, approval rates, delinquency, and gateway failures. "

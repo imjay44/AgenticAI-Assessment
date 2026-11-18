@@ -393,6 +393,8 @@ class DataProcessor:
                 "event_type_distribution": dict(risk_type_counts),
                 "team_workload": dict(risk_team_counts),
                 "delinquency_rate": round(delinquency_rate, 2),
+                "delinquent_records": delinquent_records,
+                "total_repayments": total_repayments,
                 "repayment_recovery_rate": round(repayment_recovery_rate, 2),
                 "total_due_amount": round(total_due_amount, 2),
                 "total_paid_amount": round(total_paid_amount, 2),
