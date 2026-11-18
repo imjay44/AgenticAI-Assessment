@@ -109,12 +109,23 @@ class EndToEndTestSuite:
         else:
             self.log_result("TC-AUTH-03", "Authentication", "Admin login", "FAILED", r.text)
 
-        # RBAC Check: Analyst trying admin endpoint
+        # RBAC Check 1: Analyst trying admin endpoint
         r = self.client.get("/api/admin/users", headers={"Authorization": f"Bearer {self.tokens.get('analyst')}"})
         if r.status_code == 403:
-            self.log_result("TC-AUTH-04", "Security & RBAC", "Enforce 403 Forbidden for non-admin user on admin endpoints", "PASSED")
+            self.log_result("TC-AUTH-04", "Security & RBAC", "Enforce 403 Forbidden for non-admin user on admin endpoints", "PASSED", "Blocked analyst querying /api/admin/users")
         else:
             self.log_result("TC-AUTH-04", "Security & RBAC", "RBAC permission enforcement", "FAILED", f"Status: {r.status_code}")
+
+        # RBAC Check 2: Analyst trying consequential approval sign-off (Section 9 Human-in-the-Loop)
+        r_appr = self.client.post(
+            "/api/approvals/1/action",
+            json={"decision": "Approved", "review_notes": "Unauthorized attempt by analyst"},
+            headers={"Authorization": f"Bearer {self.tokens.get('analyst')}"}
+        )
+        if r_appr.status_code == 403:
+            self.log_result("TC-AUTH-05", "Security & RBAC", "Enforce 403 Forbidden for non-manager on consequential approvals", "PASSED", "Blocked analyst signing off on /api/approvals/1/action")
+        else:
+            self.log_result("TC-AUTH-05", "Security & RBAC", "Approval RBAC check", "FAILED", f"Status: {r_appr.status_code}")
 
     # 3. Business Profile Test
     def test_business_profile_crud(self):
@@ -391,6 +402,19 @@ class EndToEndTestSuite:
                     )
                 else:
                     self.log_result("TC-PROD-02", "Live Render Production", "Live dataset stats", "FAILED", str(data))
+
+            # Test live public frontend on Render
+            frontend_url = "https://smartops-bi-frontend.onrender.com"
+            req3 = urllib.request.Request(frontend_url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req3, timeout=10) as resp3:
+                if resp3.status == 200:
+                    self.log_result(
+                        "TC-PROD-03", "Live Frontend Production",
+                        "Verify live public React frontend deployment on Render",
+                        "PASSED", f"URL: {frontend_url} (HTTP 200 OK, Public Access)"
+                    )
+                else:
+                    self.log_result("TC-PROD-03", "Live Frontend Production", "Frontend health", "FAILED", f"Status: {resp3.status}")
         except Exception as e:
             self.log_result("TC-PROD-01", "Live Render Production", "Live backend check", "FAILED", str(e))
 
@@ -407,7 +431,8 @@ class EndToEndTestSuite:
 **Category:** Industry-Level Multi-Agent AI Application (Banking & Financial Risk Intelligence)  
 **Execution Date:** {datetime.utcnow().strftime('%B %d, %Y - %H:%M:%S UTC')}  
 **Target Environment:** Local Full-Stack & Live Render Production ([https://banking-intelligence-backend.onrender.com](https://banking-intelligence-backend.onrender.com))  
-**Frontend Deployment:** Netlify ([https://smartops-decision-intelligence.netlify.app](https://smartops-decision-intelligence.netlify.app))  
+**Frontend Deployment (Render - Public):** [https://smartops-bi-frontend.onrender.com](https://smartops-bi-frontend.onrender.com)  
+**Frontend Deployment (Netlify):** [https://smartops-decision-intelligence.netlify.app](https://smartops-decision-intelligence.netlify.app)  
 **GitHub Repository:** [https://github.com/imjay44/AgenticAI-Assessment](https://github.com/imjay44/AgenticAI-Assessment)  
 
 ---

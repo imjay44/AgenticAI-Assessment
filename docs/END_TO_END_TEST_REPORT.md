@@ -2,9 +2,10 @@
 
 **Project:** AI-Powered Smart Business Operations & Decision Intelligence System  
 **Category:** Industry-Level Multi-Agent AI Application (Banking & Financial Risk Intelligence)  
-**Execution Date:** November 18, 2026 - 09:01:12 UTC  
+**Execution Date:** November 18, 2026 - 10:00:37 UTC  
 **Target Environment:** Local Full-Stack & Live Render Production ([https://banking-intelligence-backend.onrender.com](https://banking-intelligence-backend.onrender.com))  
-**Frontend Deployment:** Netlify ([https://smartops-decision-intelligence.netlify.app](https://smartops-decision-intelligence.netlify.app))  
+**Frontend Deployment (Render - Public):** [https://smartops-bi-frontend.onrender.com](https://smartops-bi-frontend.onrender.com)  
+**Frontend Deployment (Netlify):** [https://smartops-decision-intelligence.netlify.app](https://smartops-decision-intelligence.netlify.app)  
 **GitHub Repository:** [https://github.com/imjay44/AgenticAI-Assessment](https://github.com/imjay44/AgenticAI-Assessment)  
 
 ---
@@ -13,11 +14,11 @@
 
 | Metric | Result |
 |---|:---:|
-| **Total Test Cases Executed** | **30** |
-| **Test Cases Passed** | **30** |
+| **Total Test Cases Executed** | **32** |
+| **Test Cases Passed** | **32** |
 | **Test Cases Failed** | **0** |
 | **Overall Pass Rate** | **100.0%** |
-| **Total Test Execution Duration** | **1.88 seconds** |
+| **Total Test Execution Duration** | **5.17 seconds** |
 | **Quality Audit Verdict** | **CERTIFIED & PRODUCTION READY** |
 
 ---
@@ -45,7 +46,8 @@
 | `TC-AUTH-01` | **Authentication** | Business Manager OAuth2 JWT token acquisition | Standard Payload | Expected HTTP 200 / Ground Truth Match | Matched Expected | **PASSED** |
 | `TC-AUTH-02` | **Authentication** | Data Analyst OAuth2 JWT token acquisition | Standard Payload | Expected HTTP 200 / Ground Truth Match | Matched Expected | **PASSED** |
 | `TC-AUTH-03` | **Authentication** | System Administrator OAuth2 JWT token acquisition | Standard Payload | Expected HTTP 200 / Ground Truth Match | Matched Expected | **PASSED** |
-| `TC-AUTH-04` | **Security & RBAC** | Enforce 403 Forbidden for non-admin user on admin endpoints | Standard Payload | Expected HTTP 200 / Ground Truth Match | Matched Expected | **PASSED** |
+| `TC-AUTH-04` | **Security & RBAC** | Enforce 403 Forbidden for non-admin user on admin endpoints | Standard Payload | Expected HTTP 200 / Ground Truth Match | Blocked analyst querying /api/admin/users | **PASSED** |
+| `TC-AUTH-05` | **Security & RBAC** | Enforce 403 Forbidden for non-manager on consequential approvals | Standard Payload | Expected HTTP 200 / Ground Truth Match | Blocked analyst signing off on /api/approvals/1/action | **PASSED** |
 | `TC-PROF-01` | **Business Profile** | Fetch organizational profile & targets | Standard Payload | Expected HTTP 200 / Ground Truth Match | Company: Apex Global Trust Bank | **PASSED** |
 | `TC-PROF-02` | **Business Profile** | Update risk tolerance and parameters | Standard Payload | Expected HTTP 200 / Ground Truth Match | Matched Expected | **PASSED** |
 | `TC-DATA-01` | **Dataset Management** | Retrieve dataset statistics across 6 entities | Standard Payload | Expected HTTP 200 / Ground Truth Match | Matched Expected | **PASSED** |
@@ -60,17 +62,18 @@
 | `TC-AGENT-01` | **CrewAI Multi-Agent** | Validate roles, goals, and backstories for all 6 agents | Standard Payload | Expected HTTP 200 / Ground Truth Match | Matched Expected | **PASSED** |
 | `TC-AGENT-02` | **CrewAI Multi-Agent** | Execute sequential multi-agent pipeline (Agent 1 -> Agent 6 collaboration) | Standard Payload | Expected HTTP 200 / Ground Truth Match | Report: Apex Trust Bank - Decision Intelligence Audit Report (May 1, 2026 - October 31, 2026 (Last 6 Completed Months)), Verified By: Verification Agent (Empirical Numerical Audit & Anti-Hallucination Shield) | **PASSED** |
 | `TC-AGENT-03` | **CrewAI Multi-Agent** | Verify step-by-step agent thought logs and execution timings in database | Standard Payload | Expected HTTP 200 / Ground Truth Match | 6 agent log records stored with millisecond timings | **PASSED** |
-| `TC-VER-01` | **Anti-Hallucination Guardrail** | Verification Agent cross-checks metrics against ground truth (0% tolerance check) | Standard Payload | Expected HTTP 200 / Ground Truth Match | Score: 99.4%, Passed: 6/6 checks | **PASSED** |
-| `TC-HITL-01` | **Human-in-the-Loop (Sec 9)** | Verify consequential business recommendation queued for human authorization | Standard Payload | Expected HTTP 200 / Ground Truth Match | Approval Item #2: Strategic Capital & Credit Policy Realignment (15% Marketing... | **PASSED** |
-| `TC-HITL-02` | **Human-in-the-Loop (Sec 9)** | Manager executes sign-off action with immutable decision audit trail | Standard Payload | Expected HTTP 200 / Ground Truth Match | Reviewed By: Head of Business Operations (business_manager) at 2026-11-18T09:01:11.254564 | **PASSED** |
-| `TC-CHAT-01` | **AI Copilot Chat** | Answer inquiry regarding deposits using exact dataset ground truth | Standard Payload | Expected HTTP 200 / Ground Truth Match | Agent: Finance Agent, Answer snippet: Based on our audited accounts database (May–Oct 2026), our total deposit balance... | **PASSED** |
-| `TC-CHAT-02` | **AI Copilot Chat** | Answer credit risk inquiry with grounded delinquency metrics | Standard Payload | Expected HTTP 200 / Ground Truth Match | Response: Our lending portfolio records 1200 loan applications totaling ₹3,086,315,193.91.... | **PASSED** |
-| `TC-REP-01` | **Reports & PDF Export** | Retrieve generated report #2 details | Standard Payload | Expected HTTP 200 / Ground Truth Match | Matched Expected | **PASSED** |
-| `TC-REP-02` | **Reports & PDF Export** | Download official multi-page Business Intelligence PDF Report | Standard Payload | Expected HTTP 200 / Ground Truth Match | PDF size: 8,816 bytes, Content-Type: application/pdf | **PASSED** |
-| `TC-ADM-01` | **Admin Governance** | Verify system health and governance telemetry | Standard Payload | Expected HTTP 200 / Ground Truth Match | Status: Healthy & Operational, Records: {'customers': 1200, 'accounts': 1600, 'transactions': 3500, 'generated_reports': 2, 'execution_logs': 12, 'approval_requests': 2} | **PASSED** |
+| `TC-VER-01` | **Anti-Hallucination Guardrail** | Verification Agent cross-checks metrics against ground truth (0% tolerance check) | Standard Payload | Expected HTTP 200 / Ground Truth Match | Score: 100.0%, Passed: 6/6 checks | **PASSED** |
+| `TC-HITL-01` | **Human-in-the-Loop (Sec 9)** | Verify consequential business recommendation queued for human authorization | Standard Payload | Expected HTTP 200 / Ground Truth Match | Approval Item #3: Strategic Capital & Credit Policy Realignment (Reactivate 40... | **PASSED** |
+| `TC-HITL-02` | **Human-in-the-Loop (Sec 9)** | Manager executes sign-off action with immutable decision audit trail | Standard Payload | Expected HTTP 200 / Ground Truth Match | Reviewed By: Head of Business Operations (business_manager) at 2026-11-18T10:00:32.972237 | **PASSED** |
+| `TC-CHAT-01` | **AI Copilot Chat** | Answer inquiry regarding deposits using exact dataset ground truth | Standard Payload | Expected HTTP 200 / Ground Truth Match | Agent: Finance Agent, Answer snippet: As the Finance Agent, I can confirm our audited deposit base stands at ₹2,007,42... | **PASSED** |
+| `TC-CHAT-02` | **AI Copilot Chat** | Answer credit risk inquiry with grounded delinquency metrics | Standard Payload | Expected HTTP 200 / Ground Truth Match | Response: In our lending portfolio, we evaluated 1200 loan applications totaling ₹3,086,31... | **PASSED** |
+| `TC-REP-01` | **Reports & PDF Export** | Retrieve generated report #3 details | Standard Payload | Expected HTTP 200 / Ground Truth Match | Matched Expected | **PASSED** |
+| `TC-REP-02` | **Reports & PDF Export** | Download official multi-page Business Intelligence PDF Report | Standard Payload | Expected HTTP 200 / Ground Truth Match | PDF size: 8,886 bytes, Content-Type: application/pdf | **PASSED** |
+| `TC-ADM-01` | **Admin Governance** | Verify system health and governance telemetry | Standard Payload | Expected HTTP 200 / Ground Truth Match | Status: Healthy & Operational, Records: {'customers': 1200, 'accounts': 1600, 'transactions': 3500, 'generated_reports': 3, 'execution_logs': 18, 'approval_requests': 3} | **PASSED** |
 | `TC-ADM-02` | **Admin Governance** | List provisioned platform users across all roles | Standard Payload | Expected HTTP 200 / Ground Truth Match | 3 active users | **PASSED** |
 | `TC-PROD-01` | **Live Render Production** | Verify live cloud backend health endpoint at Render | Standard Payload | Expected HTTP 200 / Ground Truth Match | URL: https://banking-intelligence-backend.onrender.com/health (HTTP 200) | **PASSED** |
 | `TC-PROD-02` | **Live Render Production** | Verify live production database API indexing 10,500 records | Standard Payload | Expected HTTP 200 / Ground Truth Match | Customers: 1200, Transactions: 3500 | **PASSED** |
+| `TC-PROD-03` | **Live Frontend Production** | Verify live public React frontend deployment on Render | Standard Payload | Expected HTTP 200 / Ground Truth Match | URL: https://smartops-bi-frontend.onrender.com (HTTP 200 OK, Public Access) | **PASSED** |
 
 ---
 

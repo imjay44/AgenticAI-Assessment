@@ -8,6 +8,14 @@
 
 An industry-level, full-stack multi-agent AI application engineered for the **Banking & Financial Risk Intelligence** domain. The platform analyzes **10,500 real synthetic banking records** spanning the six-month operating window (**May 1, 2026 – October 31, 2026**), orchestrates **6 specialized autonomous CrewAI agents**, enforces a **zero-hallucination verification engine**, implements **Human-in-the-Loop executive governance**, and produces downloadable corporate **Business Intelligence PDF reports**.
 
+### 🌐 Live Production Deployments & Access
+
+* **Public Live Frontend (Render):** [https://smartops-bi-frontend.onrender.com](https://smartops-bi-frontend.onrender.com)
+* **Live Production Backend API (Render):** [https://banking-intelligence-backend.onrender.com](https://banking-intelligence-backend.onrender.com)
+* **Interactive OpenAPI / Swagger Documentation:** [https://banking-intelligence-backend.onrender.com/docs](https://banking-intelligence-backend.onrender.com/docs)
+* **Netlify Frontend Deployment:** [https://smartops-decision-intelligence.netlify.app](https://smartops-decision-intelligence.netlify.app)
+* **End-to-End Test Report:** [docs/END_TO_END_TEST_REPORT.md](file:///c:/Users/topst/OneDrive/Desktop/AgenticAI%20Assessment/docs/END_TO_END_TEST_REPORT.md) (32/32 Tests Passed, 100% Pass Rate)
+
 ---
 
 ## 🏛️ Project Architecture Overview
@@ -65,11 +73,11 @@ An industry-level, full-stack multi-agent AI application engineered for the **Ba
 1. **Agent 1: Senior Banking Data Analyst Agent**
    - *Goal:* Perform deep quantitative analysis on 10,500 dataset rows, compute core banking KPIs, identify monthly volume shifts, and generate empirical summaries.
 2. **Agent 2: Strategic Banking Marketing Agent**
-   - *Goal:* Segment customer portfolio (Priority, Corporate, SME, Retail), diagnose the 32.1% account dormancy rate, and design retention and deposit mobilization campaigns.
+   - *Goal:* Segment customer portfolio (Priority, Corporate, SME, Retail), diagnose the 25.25% account dormancy rate (404 dormant accounts), and design retention and deposit mobilization campaigns.
 3. **Agent 3: Chief Financial Officer (CFO) Intelligence Agent**
    - *Goal:* Assess net liquidity spread (Credits ₹220.6Cr vs Debits ₹219.4Cr), loan disbursement yield across ₹182.4Cr, and formulate capital efficiency strategies.
 4. **Agent 4: Bank Operations & Process Intelligence Agent**
-   - *Goal:* Diagnose the 4.89% transaction failure rate across payment switches (UPI, POS, NEFT, IMPS), detect operational bottlenecks, and resolve risk investigation workload.
+   - *Goal:* Diagnose the 4.89% transaction failure rate across payment switches (exactly 171 failures of 3,500 txns), detect operational bottlenecks, and resolve risk investigation workload (120 critical risk events, 154 open cases).
 5. **Agent 5: Executive Bank Strategy & Decision Intelligence Agent**
    - *Goal:* Synthesize cross-agent findings into an actionable 6-month business improvement roadmap and submit consequential decisions for human sign-off.
 6. **Agent 6: Independent Audit & Anti-Hallucination Verification Agent**
@@ -80,11 +88,11 @@ An industry-level, full-stack multi-agent AI application engineered for the **Ba
 ## 👥 Human-in-the-Loop (HITL) Governance (Section 9)
 
 Autonomous agents **cannot execute consequential business actions without human approval**:
-1. Strategy Agent proposes **15% Marketing Reallocation (₹12.5Cr) + Enforcing CIBIL >= 620 Cutoff**.
-2. Verification Agent audits the proposal against ground-truth delinquency (53.1%) and dormancy (32.1%).
+1. Strategy Agent proposes **15% Marketing Reallocation + Enforcing CIBIL >= 620 Cutoff**.
+2. Verification Agent audits the proposal against ground-truth delinquency (53.12% defined as DPD > 30 or Missed/Late) and dormancy (25.25%).
 3. The recommendation is queued on the **Human-in-the-Loop Console**.
-4. The Business Manager reviews the financial impact (+₹85Cr deposits) and risk reduction.
-5. The Manager clicks **"Authorize & Approve Execution"** or **"Reject Action"** with executive remarks.
+4. The Business Manager reviews the financial impact (recovering dormant deposits) and risk reduction.
+5. The Manager clicks **"Authorize & Approve Execution"** or **"Reject Action"** with executive remarks (enforced via RBAC: HTTP 403 Forbidden for non-managers).
 6. An immutable audit record is saved in the database.
 
 ---
