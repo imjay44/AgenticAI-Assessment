@@ -46,21 +46,21 @@ class BankingAgentFactory:
 
     @staticmethod
     def create_crewai_agents(llm: Optional[Any] = None) -> dict:
-        """Attempts to create CrewAI Agent instances if crewai is available and configured."""
+        """Creates CrewAI Agent instances with roles, goals, backstories, and tools."""
         try:
             from crewai import Agent
-            specs = BankingAgentFactory.get_agent_specs()
-            agents = {}
-            for key, spec in specs.items():
-                agents[key] = Agent(
-                    role=spec["role"],
-                    goal=spec["goal"],
-                    backstory=spec["backstory"],
-                    verbose=True,
-                    allow_delegation=(key in ["strategy", "verification"]),
-                    llm=llm
-                )
-            return agents
-        except Exception as e:
-            # Fallback when crewai requires active LLM client or runs in analytical mode
-            return None
+        except ImportError:
+            from app.agents.crewai_engine import Agent
+
+        specs = BankingAgentFactory.get_agent_specs()
+        agents = {}
+        for key, spec in specs.items():
+            agents[key] = Agent(
+                role=spec["role"],
+                goal=spec["goal"],
+                backstory=spec["backstory"],
+                verbose=True,
+                allow_delegation=(key in ["strategy", "verification"]),
+                llm=llm
+            )
+        return agents
